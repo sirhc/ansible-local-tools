@@ -5,7 +5,11 @@
     bin_dir: "{{ base_dir }}/bin"
     opt_dir: "{{ base_dir }}/opt"
   pre_tasks:
-    - name: Disable Restic Backups
+    - name: Disable Restic Backups in {{ bin_dir }}
+      file:
+        path: "{{ bin_dir }}/.nobackup"
+        state: touch
+    - name: Disable Restic Backups in {{ opt_dir }}
       file:
         path: "{{ opt_dir }}/.nobackup"
         state: touch
