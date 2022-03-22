@@ -1,0 +1,30 @@
+---
+- name: Get release metadata
+  uri:
+    url: https://api.github.com/repos/mikefarah/yq/releases/{{ release }}
+    return_content: yes
+  register: release_metadata
+
+- name: Get release tag
+  shell:
+    cmd: jq -r '.tag_name'
+    stdin: "{{ release_metadata.content | string }}"
+  register: release_tag
+
+- name: Get release URL
+  shell:
+    cmd: jq -r '.assets[] | select(.browser_download_url | match("linux_amd64$")) | .browser_download_url'
+    stdin: "{{ release_metadata.content | string }}"
+  register: release_url
+
+- name: Download release
+  get_url:
+    url: "{{ release_url.stdout }}"
+    dest: "{{ bin_dir }}/yq-{{ release_tag.stdout }}"
+    mode: "0755"
+
+- name: Create symlink
+  file:
+    src: "{{ bin_dir }}/yq-{{ release_tag.stdout }}"
+    dest: "{{ bin_dir }}/yq"
+    state: link
