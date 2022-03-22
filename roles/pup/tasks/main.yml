@@ -5,12 +5,6 @@
     return_content: yes
   register: release_metadata
 
-- name: Get release tag
-  shell:
-    cmd: jq -r '.tag_name'
-    stdin: "{{ release_metadata.content | string }}"
-  register: release_tag
-
 - name: Get release URL
   shell:
     cmd: jq -r '.assets[] | select(.browser_download_url | match("linux_amd64")) | .browser_download_url'
@@ -31,14 +25,8 @@
 - name: Install release
   copy:
     src: "{{ tempdir.path }}/pup"
-    dest: "{{ bin_dir }}/pup-{{ release_tag.stdout }}"
-    mode: "0755"
-
-- name: Create symlink
-  file:
-    src: "{{ bin_dir }}/pup-{{ release_tag.stdout }}"
     dest: "{{ bin_dir }}/pup"
-    state: link
+    mode: "0755"
 
 - name: Remove temporary directory
   file:

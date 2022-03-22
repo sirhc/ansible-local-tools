@@ -5,12 +5,6 @@
     return_content: yes
   register: release_metadata
 
-- name: Get release tag
-  shell:
-    cmd: jq -r '.tag_name'
-    stdin: "{{ release_metadata.content | string }}"
-  register: release_tag
-
 # stdout_lines: [
 #   https://github.com/gohugoio/hugo/releases/download/v0.95.0/hugo_0.95.0_Linux-64bit.tar.gz
 #   https://github.com/gohugoio/hugo/releases/download/v0.95.0/hugo_extended_0.95.0_Linux-64bit.tar.gz
@@ -35,14 +29,8 @@
 - name: Install release
   copy:
     src: "{{ tempdir.path }}/hugo"
-    dest: "{{ bin_dir }}/hugo-{{ release_tag.stdout }}"
-    mode: "0755"
-
-- name: Create symlink
-  file:
-    src: "{{ bin_dir }}/hugo-{{ release_tag.stdout }}"
     dest: "{{ bin_dir }}/hugo"
-    state: link
+    mode: "0755"
 
 - name: Remove temporary directory
   file:
