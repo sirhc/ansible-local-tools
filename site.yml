@@ -16,4 +16,5 @@
   roles:
     - awscliv2
     - grip
+    - hugo
     - pup

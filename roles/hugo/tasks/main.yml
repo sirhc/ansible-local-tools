@@ -1,0 +1,50 @@
+---
+- name: Get release metadata
+  uri:
+    url: https://api.github.com/repos/gohugoio/hugo/releases/{{ release }}
+    return_content: yes
+  register: release_metadata
+
+- name: Get release tag
+  shell:
+    cmd: jq -r '.tag_name'
+    stdin: "{{ release_metadata.content | string }}"
+  register: release_tag
+
+# stdout_lines: [
+#   https://github.com/gohugoio/hugo/releases/download/v0.95.0/hugo_0.95.0_Linux-64bit.tar.gz
+#   https://github.com/gohugoio/hugo/releases/download/v0.95.0/hugo_extended_0.95.0_Linux-64bit.tar.gz
+# ]
+- name: Get release URL
+  shell:
+    cmd: jq -r '.assets[] | select(.browser_download_url | match("Linux-64bit.tar.gz")) | .browser_download_url'
+    stdin: "{{ release_metadata.content | string }}"
+  register: release_url
+
+- name: Create temporary directory
+  tempfile:
+    state: directory
+  register: tempdir
+
+- name: Download release
+  unarchive:
+    src: "{{ release_url.stdout_lines[0] }}"
+    dest: "{{ tempdir.path }}"
+    remote_src: yes
+
+- name: Install release
+  copy:
+    src: "{{ tempdir.path }}/hugo"
+    dest: "{{ bin_dir }}/hugo-{{ release_tag.stdout }}"
+    mode: "0755"
+
+- name: Create symlink
+  file:
+    src: "{{ bin_dir }}/hugo-{{ release_tag.stdout }}"
+    dest: "{{ bin_dir }}/hugo"
+    state: link
+
+- name: Remove temporary directory
+  file:
+    path: "{{ tempdir.path }}"
+    state: absent
