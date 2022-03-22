@@ -1,14 +1,46 @@
 ---
-- name: Get Download URL
-  shell:
-    cmd: jq -r '.assets[] | .browser_download_url' | grep linux_amd64
-    stdin: "{{ lookup('url', 'https://api.github.com/repos/ericchiang/pup/releases/latest', split_lines=False) | string }}"
-  register: download_url
+- name: Get release metadata
+  uri:
+    url: https://api.github.com/repos/ericchiang/pup/releases/{{ release }}
+    return_content: yes
+  register: release_metadata
 
-- name: Download
+- name: Get release tag
+  shell:
+    cmd: jq -r '.tag_name'
+    stdin: "{{ release_metadata.content | string }}"
+  register: release_tag
+
+- name: Get release URL
+  shell:
+    cmd: jq -r '.assets[] | select(.browser_download_url | match("linux_amd64")) | .browser_download_url'
+    stdin: "{{ release_metadata.content | string }}"
+  register: release_url
+
+- name: Create temporary directory
+  tempfile:
+    state: directory
+  register: tempdir
+
+- name: Download release
   unarchive:
-    src: "{{ download_url.stdout }}"
-    dest: "{{ bin_dir }}"
+    src: "{{ release_url.stdout }}"
+    dest: "{{ tempdir.path }}"
     remote_src: yes
-  args:
-    creates: "{{ bin_dir }}/pup"
+
+- name: Install release
+  copy:
+    src: "{{ tempdir.path }}/pup"
+    dest: "{{ bin_dir }}/pup-{{ release_tag.stdout }}"
+    mode: "0755"
+
+- name: Create symlink
+  file:
+    src: "{{ bin_dir }}/pup-{{ release_tag.stdout }}"
+    dest: "{{ bin_dir }}/pup"
+    state: link
+
+- name: Remove temporary directory
+  file:
+    path: "{{ tempdir.path }}"
+    state: absent
