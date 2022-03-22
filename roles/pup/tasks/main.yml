@@ -8,7 +8,7 @@
 - name: Download
   unarchive:
     src: "{{ download_url.stdout }}"
-    dest: "{{ base_dir }}/bin"
+    dest: "{{ bin_dir }}"
     remote_src: yes
   args:
-    creates: "{{ base_dir }}/bin/pup"
+    creates: "{{ bin_dir }}/pup"

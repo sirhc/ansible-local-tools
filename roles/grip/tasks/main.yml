@@ -8,10 +8,10 @@
 - name: Install Module
   pip:
     name: grip
-    virtualenv: "{{ base_dir }}/opt/grip"
+    virtualenv: "{{ opt_dir }}/grip"
 
 - name: Create Link
   file:
-    src: "{{ base_dir }}/opt/grip/bin/grip"
-    dest: "{{ base_dir }}/bin/grip"
+    src: "{{ opt_dir }}/grip/bin/grip"
+    dest: "{{ bin_dir }}/grip"
     state: link

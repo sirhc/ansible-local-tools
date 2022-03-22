@@ -2,10 +2,12 @@
 - hosts: localhost
   vars:
     base_dir: "{{ lookup('env', 'HOME') }}/.local"
+    bin_dir: "{{ base_dir }}/bin"
+    opt_dir: "{{ base_dir }}/opt"
   pre_tasks:
     - name: Disable Restic Backups
       file:
-        path: "{{ base_dir }}/opt/.nobackup"
+        path: "{{ opt_dir }}/.nobackup"
         state: touch
   roles:
     - awscliv2
