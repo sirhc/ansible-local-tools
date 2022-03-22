@@ -1,0 +1,14 @@
+---
+- name: Get Download URL
+  shell:
+    cmd: jq -r '.assets[] | .browser_download_url' | grep linux_amd64
+    stdin: "{{ lookup('url', 'https://api.github.com/repos/ericchiang/pup/releases/latest', split_lines=False) | string }}"
+  register: download_url
+
+- name: Download
+  unarchive:
+    src: "{{ download_url.stdout }}"
+    dest: "{{ base_dir }}/bin"
+    remote_src: yes
+  args:
+    creates: "{{ base_dir }}/bin/pup"

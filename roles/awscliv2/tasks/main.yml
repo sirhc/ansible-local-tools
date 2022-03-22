@@ -1,0 +1,66 @@
+---
+- name: Check Latest Version
+  block:
+    - name: Get Latest Version
+      shell:
+        cmd: grep '<title>' | perl -nE '/AWS CLI (\d\S+) / && say $1'
+        stdin: "{{ lookup('url', 'https://awscli.amazonaws.com/v2/documentation/api/latest/index.html', split_lines=False) }}"
+      register: version
+
+    - name: Set Version
+      set_fact:
+        version: "{{ version.stdout }}"
+
+    - name: Show Version
+      debug:
+        msg: "Latest version of AWS CLI is {{ version }}"
+
+    - name: Check for Installation
+      stat:
+        path: "{{ base_dir }}/opt/awscli/v2/{{ version }}"
+      register: version_dir
+
+- name: Install Latest Version
+  block:
+    - name: Create Temporary Directory
+      tempfile:
+        state: directory
+      register: tf
+
+    - name: Download
+      unarchive:
+        src: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+        dest: "{{ tf.path }}"
+        remote_src: yes
+
+    - name: Install
+      command:
+        argv:
+          - ./aws/install
+          - --install-dir
+          - "{{ base_dir }}/opt/awscli"
+          - --bin-dir
+          - "{{ base_dir }}/bin"
+          - --update
+      args:
+        chdir: "{{ tf.path }}"
+
+    - name: Remove Temporary Directory
+      file:
+        path: "{{ tf.path }}"
+        state: absent
+  when: not version_dir.stat.exists
+
+# Keep only the last two versions.
+- name: Remove Old Versions
+  block:
+    - name: Get Versions
+      shell: ls -1d {{ base_dir }}/opt/awscli/v2/2.* | sort -Vr
+      register: all_versions
+
+    - name: Remove Old Versions
+      file:
+        path: "{{ item }}"
+        state: absent
+      with_items: "{{ all_versions.stdout_lines[2:] }}"
+      when: (all_versions.stdout_lines | length) > 2
