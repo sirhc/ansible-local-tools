@@ -1,0 +1,18 @@
+---
+- name: Get release metadata
+  uri:
+    url: https://api.github.com/repos/jmespath/jp/releases/{{ release }}
+    return_content: yes
+  register: release_metadata
+
+- name: Get release URL
+  shell:
+    cmd: jq -r '.assets[] | select(.browser_download_url | match("linux-amd64$")) | .browser_download_url'
+    stdin: "{{ release_metadata.content | string }}"
+  register: release_url
+
+- name: Download release
+  get_url:
+    url: "{{ release_url.stdout }}"
+    dest: "{{ bin_dir }}/jp"
+    mode: "0755"
