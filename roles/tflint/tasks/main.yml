@@ -1,0 +1,34 @@
+---
+- name: Get Release Metadata
+  uri:
+    url: https://api.github.com/repos/terraform-linters/tflint/releases/{{ release }}
+    return_content: yes
+  register: release_metadata
+
+- name: Get Release Tag
+  shell:
+    cmd: jq -r '.tag_name'
+    stdin: "{{ release_metadata.content | string }}"
+  register: release_tag
+
+- name: Create Temporary Directory
+  tempfile:
+    state: directory
+  register: tempdir
+
+- name: Download Release
+  unarchive:
+    src: https://github.com/terraform-linters/tflint/releases/download/{{ release_tag.stdout }}/tflint_linux_amd64.zip
+    dest: "{{ tempdir.path }}"
+    remote_src: yes
+
+- name: Install Release
+  copy:
+    src: "{{ tempdir.path }}/tflint"
+    dest: "{{ bin_dir }}/tflint"
+    mode: "0755"
+
+- name: Remove Temporary Directory
+  file:
+    path: "{{ tempdir.path }}"
+    state: absent

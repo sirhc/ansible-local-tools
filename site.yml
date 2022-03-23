@@ -20,4 +20,5 @@
     - jp
     - pup
     - textql
+    - tflint
     - yq
