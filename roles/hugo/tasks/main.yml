@@ -1,5 +1,5 @@
 ---
-- name: Get release metadata
+- name: Get Release Metadata
   uri:
     url: https://api.github.com/repos/gohugoio/hugo/releases/{{ release }}
     return_content: yes
@@ -9,30 +9,30 @@
 #   https://github.com/gohugoio/hugo/releases/download/v0.95.0/hugo_0.95.0_Linux-64bit.tar.gz
 #   https://github.com/gohugoio/hugo/releases/download/v0.95.0/hugo_extended_0.95.0_Linux-64bit.tar.gz
 # ]
-- name: Get release URL
+- name: Get Release URL
   shell:
     cmd: jq -r '.assets[] | select(.browser_download_url | match("Linux-64bit.tar.gz")) | .browser_download_url'
     stdin: "{{ release_metadata.content | string }}"
   register: release_url
 
-- name: Create temporary directory
+- name: Create Temporary Directory
   tempfile:
     state: directory
   register: tempdir
 
-- name: Download release
+- name: Download Release
   unarchive:
     src: "{{ release_url.stdout_lines[0] }}"
     dest: "{{ tempdir.path }}"
     remote_src: yes
 
-- name: Install release
+- name: Install Release
   copy:
     src: "{{ tempdir.path }}/hugo"
     dest: "{{ bin_dir }}/hugo"
     mode: "0755"
 
-- name: Remove temporary directory
+- name: Remove Temporary Directory
   file:
     path: "{{ tempdir.path }}"
     state: absent
