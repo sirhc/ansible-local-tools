@@ -1,0 +1,18 @@
+---
+- name: Install Requirements
+  dnf:
+    name: gh
+    state: present
+  become: yes
+
+- name: Install {{ envname }}
+  command: gh repo clone {{ repo }} {{ opt_dir }}/{{ envname }}
+  args:
+    creates: "{{ opt_dir }}/{{ envname }}"
+
+- name: Link {{ envname }} Commands
+  file:
+    src: "{{ opt_dir }}/{{ envname }}/bin/{{ item }}"
+    dest: "{{ bin_dir }}/{{ item }}"
+    state: link
+  loop: "{{ [ envname, extra ] | flatten(1) }}"
