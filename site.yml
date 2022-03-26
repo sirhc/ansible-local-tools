@@ -4,6 +4,7 @@
     base_dir: "{{ lookup('env', 'HOME') }}/.local"
     bin_dir: "{{ base_dir }}/bin"
     opt_dir: "{{ base_dir }}/opt"
+    release: latest  # default, override in individual role calls
   pre_tasks:
     - name: Disable Restic Backups in {{ bin_dir }}
       file:
