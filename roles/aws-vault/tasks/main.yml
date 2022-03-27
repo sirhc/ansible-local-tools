@@ -16,3 +16,12 @@
     url: https://github.com/99designs/aws-vault/releases/download/{{ release_tag.stdout }}/aws-vault-linux-amd64
     dest: "{{ bin_dir }}/aws-vault"
     mode: "0755"
+
+- name: Generate Completion Function
+  command: "{{ bin_dir }}/aws-vault --completion-script-zsh"
+  register: completion
+
+- name: Create Completion Function
+  copy:
+    dest: "{{ base_dir }}/share/zsh/site-functions/_aws_vault"
+    content: "{{ completion.stdout }}"
