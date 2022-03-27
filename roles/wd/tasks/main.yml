@@ -1,0 +1,36 @@
+---
+- name: Get Release Metadata
+  uri:
+    url: https://api.github.com/repos/mfaerevaag/wd/releases/{{ release }}
+    return_content: yes
+  register: release_metadata
+
+- name: Get Release Tag
+  shell:
+    cmd: jq -r '.tag_name'
+    stdin: "{{ release_metadata.content | string }}"
+  register: release_tag
+
+- name: Clone Repository
+  git:
+    repo: https://github.com/mfaerevaag/wd.git
+    dest: "{{ opt_dir }}/wd"
+    version: "{{ release_tag.stdout }}"
+
+- name: Link Command
+  file:
+    src: "{{ opt_dir }}/wd/wd.sh"
+    dest: "{{ bin_dir }}/wd.sh"
+    state: link
+
+- name: Link Man Page
+  file:
+    src: "{{ opt_dir }}/wd/wd.1"
+    dest: "{{ man_dir }}/man1/wd.1"
+    state: link
+
+- name: Link Completion Function
+  file:
+    src: "{{ opt_dir }}/wd/_wd.sh"
+    dest: "{{ base_dir }}/share/zsh/site-functions/_wd"
+    state: link

@@ -57,4 +57,5 @@
     - shfmt
     - textql
     - tflint
+    - wd
     - yq
