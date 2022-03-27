@@ -15,6 +15,7 @@
         path: "{{ opt_dir }}/.nobackup"
         state: touch
   roles:
+    - aws-vault
     - awscliv2
     - grip
     - hugo
