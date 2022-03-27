@@ -3,6 +3,7 @@
   vars:
     base_dir: "{{ lookup('env', 'HOME') }}/.local"
     bin_dir: "{{ base_dir }}/bin"
+    man_dir: "{{ base_dir }}/share/man"
     opt_dir: "{{ base_dir }}/opt"
     release: latest  # default, override in individual role calls
   pre_tasks:
@@ -14,6 +15,36 @@
       file:
         path: "{{ opt_dir }}/.nobackup"
         state: touch
+    - name: Create {{ base_dir }} Directory
+      file:
+        path: "{{ base_dir }}"
+        state: directory
+        mode: "0755"
+    - name: Create {{ bin_dir }} Directory
+      file:
+        path: "{{ bin_dir }}"
+        state: directory
+        mode: "0755"
+    - name: Create {{ man_dir }} Directory
+      file:
+        path: "{{ man_dir }}"
+        state: directory
+        mode: "0755"
+    - name: Create {{ man_dir }}/man1 Directory
+      file:
+        path: "{{ man_dir }}/man1"
+        state: directory
+        mode: "0755"
+    - name: Create {{ opt_dir }} Directory
+      file:
+        path: "{{ opt_dir }}"
+        state: directory
+        mode: "0755"
+    - name: Create {{ base_dir }}/share/zsh/site-functions Directory
+      file:
+        path: "{{ base_dir }}/share/zsh/site-functions"
+        state: directory
+        mode: "0755"
   roles:
     - aws-vault
     - awscliv2
