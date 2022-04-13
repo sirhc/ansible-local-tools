@@ -49,6 +49,7 @@
     - aws-vault
     - awscliv2
     - fd
+    - granted
     - grip
     - hugo
     - jp
