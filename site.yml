@@ -48,6 +48,7 @@
   roles:
     - aws-vault
     - awscliv2
+    - b2
     - fd
     - granted
     - grip

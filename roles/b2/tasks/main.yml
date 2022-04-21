@@ -1,0 +1,32 @@
+---
+- name: Get Release Metadata
+  uri:
+    url: https://api.github.com/repos/Backblaze/B2_Command_Line_Tool/releases/{{ release }}
+    return_content: yes
+  register: release_metadata
+
+- name: Get Release Tag
+  shell:
+    cmd: jq -r '.tag_name'
+    stdin: "{{ release_metadata.content | string }}"
+  register: release_tag
+
+- name: Download Release
+  get_url:
+    url: https://github.com/Backblaze/B2_Command_Line_Tool/releases/download/{{ release_tag.stdout }}/b2-linux
+    dest: "{{ bin_dir }}/b2"
+    mode: "0755"
+
+# TODO: Figure out how to get zsh to automatically use the bash completion function.
+
+# - name: Download Completion Function
+#   get_url:
+#     url: https://raw.githubusercontent.com/Backblaze/B2_Command_Line_Tool/master/contrib/bash_completion/b2
+#     dest: "{{ base_dir }}/share/zsh/site-functions/_b2"
+#     mode: "0644"
+
+# - name: Add zsh compdef Line
+#   lineinfile:
+#     path: "{{ base_dir }}/share/zsh/site-functions/_b2"
+#     insertbefore: BOF
+#     line: "#compdef b2"
