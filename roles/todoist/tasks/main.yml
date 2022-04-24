@@ -1,0 +1,30 @@
+---
+- name: Get Release Metadata
+  uri:
+    url: https://api.github.com/repos/sachaos/todoist/releases/{{ release }}
+    return_content: yes
+  register: release_metadata
+
+- name: Get Release Tag
+  shell:
+    cmd: jq -r '.tag_name'
+    stdin: "{{ release_metadata.content | string }}"
+  register: release_tag
+
+- name: Download Release
+  get_url:
+    url: https://github.com/sachaos/todoist/releases/download/{{ release_tag.stdout }}/todoist_linux_amd64
+    dest: "{{ bin_dir }}/todoist"
+    mode: "0755"
+
+- name: Generate Completion Function
+  get_url:
+    url: https://raw.githubusercontent.com/urfave/cli/main/autocomplete/zsh_autocomplete
+    dest: "{{ base_dir }}/share/zsh/site-functions/_todoist"
+    mode: "0644"
+
+- name: Replace $PATH
+  replace:
+    path: "{{ base_dir }}/share/zsh/site-functions/_todoist"
+    regexp: '\$PROG'
+    replace: todoist

@@ -60,5 +60,6 @@
     - shfmt
     - textql
     - tflint
+    - todoist
     - wd
     - yq
