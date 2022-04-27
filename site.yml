@@ -7,14 +7,6 @@
     opt_dir: "{{ base_dir }}/opt"
     release: latest  # default, override in individual role calls
   pre_tasks:
-    - name: Disable Restic Backups in {{ bin_dir }}
-      file:
-        path: "{{ bin_dir }}/.nobackup"
-        state: touch
-    - name: Disable Restic Backups in {{ opt_dir }}
-      file:
-        path: "{{ opt_dir }}/.nobackup"
-        state: touch
     - name: Create {{ base_dir }} Directory
       file:
         path: "{{ base_dir }}"
@@ -45,6 +37,10 @@
         path: "{{ base_dir }}/share/zsh/site-functions"
         state: directory
         mode: "0755"
+    - name: Disable Restic Backups
+      file:
+        path: "{{ base_dir }}/.nobackup"
+        state: touch
   roles:
     - aws-vault
     - awscliv2
