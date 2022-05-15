@@ -1,0 +1,17 @@
+---
+- name: Install Requirements
+  dnf:
+    name: python3-virtualenv
+    state: present
+  become: yes
+
+- name: Install Module
+  pip:
+    name: podfox
+    virtualenv: "{{ opt_dir }}/podfox"
+
+- name: Create Link
+  file:
+    src: "{{ opt_dir }}/podfox/bin/podfox"
+    dest: "{{ bin_dir }}/podfox"
+    state: link
