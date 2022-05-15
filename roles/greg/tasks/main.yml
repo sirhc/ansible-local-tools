@@ -7,11 +7,11 @@
 
 - name: Install Module
   pip:
-    name: podfox
-    virtualenv: "{{ opt_dir }}/podfox"
+    name: greg
+    virtualenv: "{{ opt_dir }}/greg"
 
 - name: Create Link
   file:
-    src: "{{ opt_dir }}/podfox/bin/podfox"
-    dest: "{{ bin_dir }}/podfox"
+    src: "{{ opt_dir }}/greg/bin/greg"
+    dest: "{{ bin_dir }}/greg"
     state: link
