@@ -1,0 +1,19 @@
+---
+- name: Install Requirements
+  dnf:
+    name: python3-virtualenv
+    state: present
+  become: yes
+
+- name: Install Modules
+  pip:
+    name:
+      - eyeD3
+      - greg
+    virtualenv: "{{ opt_dir }}/greg"
+
+- name: Create Link
+  file:
+    src: "{{ opt_dir }}/greg/bin/greg"
+    dest: "{{ bin_dir }}/greg"
+    state: link
