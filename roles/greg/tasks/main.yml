@@ -5,9 +5,11 @@
     state: present
   become: yes
 
-- name: Install Module
+- name: Install Modules
   pip:
-    name: greg
+    name:
+      - eyeD3
+      - greg
     virtualenv: "{{ opt_dir }}/greg"
 
 - name: Create Link
