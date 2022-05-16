@@ -1,0 +1,17 @@
+---
+- name: Install Requirements
+  dnf:
+    name: python3-virtualenv
+    state: present
+  become: yes
+
+- name: Install Module
+  pip:
+    name: humblebundle-downloader
+    virtualenv: "{{ opt_dir }}/humblebundle-downloader"
+
+- name: Create Link
+  file:
+    src: "{{ opt_dir }}/humblebundle-downloader/bin/hbd"
+    dest: "{{ bin_dir }}/hbd"
+    state: link
