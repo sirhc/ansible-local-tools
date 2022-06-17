@@ -45,6 +45,7 @@
     - aws-vault
     - awscliv2
     - b2
+    - epy
     - fd
     - gau
     - granted
