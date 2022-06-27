@@ -2,12 +2,12 @@
 - name: Get Release Metadata
   uri:
     url: https://api.github.com/repos/ericchiang/pup/releases/{{ release }}
-    return_content: yes
+    return_content: true
   register: release_metadata
 
 - name: Get Release URL
   shell:
-    cmd: jq -r '.assets[] | select(.browser_download_url | match("linux_amd64")) | .browser_download_url'
+    cmd: jq -r '.assets[] | select(.browser_download_url | match("linux_amd64")) | .browser_download_url'  # yamllint disable-line rule:line-length
     stdin: "{{ release_metadata.content | string }}"
   register: release_url
 
@@ -20,7 +20,7 @@
   unarchive:
     src: "{{ release_url.stdout }}"
     dest: "{{ tempdir.path }}"
-    remote_src: yes
+    remote_src: true
 
 - name: Install Release
   copy:

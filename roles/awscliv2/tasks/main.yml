@@ -8,14 +8,14 @@
   unarchive:
     src: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
     dest: "{{ tf.path }}"
-    remote_src: yes
+    remote_src: true
   when: release == 'latest'
 
 - name: Download Release
   unarchive:
-    src: "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-{{ release }}.zip"
+    src: "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-{{ release }}.zip"  # yamllint disable-line rule:line-length
     dest: "{{ tf.path }}"
-    remote_src: yes
+    remote_src: true
   when: release != 'latest'
 
 - name: Install

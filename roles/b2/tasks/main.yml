@@ -1,8 +1,8 @@
 ---
 - name: Get Release Metadata
   uri:
-    url: https://api.github.com/repos/Backblaze/B2_Command_Line_Tool/releases/{{ release }}
-    return_content: yes
+    url: https://api.github.com/repos/Backblaze/B2_Command_Line_Tool/releases/{{ release }}  # yamllint disable-line rule:line-length
+    return_content: true
   register: release_metadata
 
 - name: Get Release Tag
@@ -13,9 +13,11 @@
 
 - name: Download Release
   get_url:
-    url: https://github.com/Backblaze/B2_Command_Line_Tool/releases/download/{{ release_tag.stdout }}/b2-linux
+    url: https://github.com/Backblaze/B2_Command_Line_Tool/releases/download/{{ release_tag.stdout }}/b2-linux  # yamllint disable-line rule:line-length
     dest: "{{ bin_dir }}/b2"
     mode: "0755"
+
+# yamllint disable
 
 # TODO: Figure out how to get zsh to automatically use the bash completion function.
 

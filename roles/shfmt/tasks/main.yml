@@ -2,7 +2,7 @@
 - name: Get Release Metadata
   uri:
     url: https://api.github.com/repos/mvdan/sh/releases/{{ release }}
-    return_content: yes
+    return_content: true
   register: release_metadata
 
 - name: Get Release Tag
@@ -13,6 +13,6 @@
 
 - name: Download Release
   get_url:
-    url: https://github.com/mvdan/sh/releases/download/{{ release_tag.stdout }}/shfmt_{{ release_tag.stdout }}_linux_amd64
+    url: https://github.com/mvdan/sh/releases/download/{{ release_tag.stdout }}/shfmt_{{ release_tag.stdout }}_linux_amd64  # yamllint disable-line rule:line-length
     dest: "{{ bin_dir }}/shfmt"
     mode: "0755"

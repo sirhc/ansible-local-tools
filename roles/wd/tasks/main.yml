@@ -2,7 +2,7 @@
 - name: Get Release Metadata
   uri:
     url: https://api.github.com/repos/mfaerevaag/wd/releases/{{ release }}
-    return_content: yes
+    return_content: true
   register: release_metadata
 
 - name: Get Release Tag

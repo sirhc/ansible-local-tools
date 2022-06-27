@@ -2,7 +2,7 @@
 - name: Get Release Metadata
   uri:
     url: https://api.github.com/repos/common-fate/granted/releases/{{ release }}
-    return_content: yes
+    return_content: true
   register: release_metadata
 
 - name: Get Release Tag
@@ -18,9 +18,9 @@
 
 - name: Download Release
   unarchive:
-    src: https://releases.commonfate.io/granted/{{ release_tag.stdout }}/granted_{{ release_tag.stdout | replace('v', '') }}_linux_x86_64.tar.gz
+    src: https://releases.commonfate.io/granted/{{ release_tag.stdout }}/granted_{{ release_tag.stdout | replace('v', '') }}_linux_x86_64.tar.gz  # yamllint disable-line rule:line-length
     dest: "{{ tempdir.path }}"
-    remote_src: yes
+    remote_src: true
 
 - name: Install Release
   copy:

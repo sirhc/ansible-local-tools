@@ -1,8 +1,8 @@
 ---
 - name: Get Release Metadata
   uri:
-    url: https://api.github.com/repos/terraform-linters/tflint/releases/{{ release }}
-    return_content: yes
+    url: https://api.github.com/repos/terraform-linters/tflint/releases/{{ release }}  # yamllint disable-line rule:line-length
+    return_content: true
   register: release_metadata
 
 - name: Get Release Tag
@@ -18,9 +18,9 @@
 
 - name: Download Release
   unarchive:
-    src: https://github.com/terraform-linters/tflint/releases/download/{{ release_tag.stdout }}/tflint_linux_amd64.zip
+    src: https://github.com/terraform-linters/tflint/releases/download/{{ release_tag.stdout }}/tflint_linux_amd64.zip  # yamllint disable-line rule:line-length
     dest: "{{ tempdir.path }}"
-    remote_src: yes
+    remote_src: true
 
 - name: Install Release
   copy:

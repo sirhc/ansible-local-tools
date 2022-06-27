@@ -2,16 +2,12 @@
 - name: Get Release Metadata
   uri:
     url: https://api.github.com/repos/gohugoio/hugo/releases/{{ release }}
-    return_content: yes
+    return_content: true
   register: release_metadata
 
-# stdout_lines: [
-#   https://github.com/gohugoio/hugo/releases/download/v0.95.0/hugo_0.95.0_Linux-64bit.tar.gz
-#   https://github.com/gohugoio/hugo/releases/download/v0.95.0/hugo_extended_0.95.0_Linux-64bit.tar.gz
-# ]
 - name: Get Release URL
   shell:
-    cmd: jq -r '.assets[] | select(.browser_download_url | match("Linux-64bit.tar.gz")) | .browser_download_url'
+    cmd: jq -r '.assets[] | select(.browser_download_url | match("Linux-64bit.tar.gz")) | .browser_download_url'  # yamllint disable-line rule:line-length
     stdin: "{{ release_metadata.content | string }}"
   register: release_url
 
@@ -24,7 +20,7 @@
   unarchive:
     src: "{{ release_url.stdout_lines[0] }}"
     dest: "{{ tempdir.path }}"
-    remote_src: yes
+    remote_src: true
 
 - name: Install Release
   copy:

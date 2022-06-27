@@ -2,7 +2,7 @@
 - name: Get Release Metadata
   uri:
     url: https://api.github.com/repos/lc/gau/releases/{{ release }}
-    return_content: yes
+    return_content: true
   register: release_metadata
 
 - name: Get Release Tag
@@ -18,9 +18,9 @@
 
 - name: Download Release
   unarchive:
-    src: https://github.com/lc/gau/releases/download/{{ release_tag.stdout }}/gau_{{ release_tag.stdout | replace('v', '') }}_linux_amd64.tar.gz
+    src: https://github.com/lc/gau/releases/download/{{ release_tag.stdout }}/gau_{{ release_tag.stdout | replace('v', '') }}_linux_amd64.tar.gz  # yamllint disable-line rule:line-length
     dest: "{{ tempdir.path }}"
-    remote_src: yes
+    remote_src: true
 
 - name: Install Command
   copy:
