@@ -53,6 +53,7 @@
     - grip
     - hugo
     - humblebundle-downloader
+    - hwatch
     - jp
     - mcfly
     - pup
