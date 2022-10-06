@@ -38,9 +38,10 @@
         state: directory
         mode: "0755"
     - name: Disable Restic Backups
-      file:
-        path: "{{ base_dir }}/.nobackup"
-        state: touch
+      copy:
+        content: ""
+        dest: "{{ base_dir }}/.nobackup"
+        force: false
   roles:
     - aws-vault
     - awscliv2
