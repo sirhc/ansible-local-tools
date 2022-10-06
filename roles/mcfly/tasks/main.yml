@@ -1,34 +1,7 @@
 ---
-- name: Get Release Metadata
-  uri:
-    url: https://api.github.com/repos/cantino/mcfly/releases/{{ release }}
-    return_content: true
-  register: release_metadata
-
-- name: Get Release Tag
-  shell:
-    cmd: jq -r '.tag_name'
-    stdin: "{{ release_metadata.content | string }}"
-  register: release_tag
-
-- name: Create Temporary Directory
-  tempfile:
-    state: directory
-  register: tempdir
-
-- name: Download Release
-  unarchive:
-    src: https://github.com/cantino/mcfly/releases/download/{{ release_tag.stdout }}/mcfly-{{ release_tag.stdout }}-x86_64-unknown-linux-musl.tar.gz  # yamllint disable-line rule:line-length
-    dest: "{{ tempdir.path }}"
-    remote_src: true
-
-- name: Install Release
-  copy:
-    src: "{{ tempdir.path }}/mcfly"
-    dest: "{{ bin_dir }}/mcfly"
-    mode: "0755"
-
-- name: Remove Temporary Directory
-  file:
-    path: "{{ tempdir.path }}"
-    state: absent
+- import_tasks: install_github_archive.yml
+  vars:
+    repo: cantino/mcfly
+    file: mcfly-{{ tag }}-x86_64-unknown-linux-musl.tar.gz
+    copy:
+      - { src: "mcfly", dest: "{{ bin_dir }}/mcfly", mode: "0755" }

@@ -1,38 +1,10 @@
 ---
-- name: Get Release Metadata
-  uri:
-    url: https://api.github.com/repos/common-fate/granted/releases/{{ release }}
-    return_content: true
-  register: release_metadata
-
-- name: Get Release Tag
-  shell:
-    cmd: jq -r '.tag_name'
-    stdin: "{{ release_metadata.content | string }}"
-  register: release_tag
-
-- name: Create Temporary Directory
-  tempfile:
-    state: directory
-  register: tempdir
-
-- name: Download Release
-  unarchive:
-    src: https://releases.commonfate.io/granted/{{ release_tag.stdout }}/granted_{{ release_tag.stdout | replace('v', '') }}_linux_x86_64.tar.gz  # yamllint disable-line rule:line-length
-    dest: "{{ tempdir.path }}"
-    remote_src: true
-
-- name: Install Release
-  copy:
-    src: "{{ tempdir.path }}/{{ item }}"
-    dest: "{{ bin_dir }}/{{ item }}"
-    mode: "0755"
-  loop:
-    - assume
-    - assumego
-    - granted
-
-- name: Remove Temporary Directory
-  file:
-    path: "{{ tempdir.path }}"
-    state: absent
+- import_tasks: install_github_archive.yml
+  vars:
+    repo: common-fate/granted
+    file: granted_{{ tag | replace('v', '') }}_linux_x86_64.tar.gz
+    copy:
+      - { src: "assume", dest: "{{ bin_dir }}/assume", mode: "0755" }
+      - { src: "assumego", dest: "{{ bin_dir }}/assumego", mode: "0755" }
+      - { src: "granted", dest: "{{ bin_dir }}/granted", mode: "0755" }
+    github_download_url: "https://releases.commonfate.io/granted/{{ tag }}/{{ file }}"

@@ -1,34 +1,7 @@
 ---
-- name: Get Release Metadata
-  uri:
-    url: https://api.github.com/repos/lc/gau/releases/{{ release }}
-    return_content: true
-  register: release_metadata
-
-- name: Get Release Tag
-  shell:
-    cmd: jq -r '.tag_name'
-    stdin: "{{ release_metadata.content | string }}"
-  register: release_tag
-
-- name: Create Temporary Directory
-  tempfile:
-    state: directory
-  register: tempdir
-
-- name: Download Release
-  unarchive:
-    src: https://github.com/lc/gau/releases/download/{{ release_tag.stdout }}/gau_{{ release_tag.stdout | replace('v', '') }}_linux_amd64.tar.gz  # yamllint disable-line rule:line-length
-    dest: "{{ tempdir.path }}"
-    remote_src: true
-
-- name: Install Command
-  copy:
-    src: "{{ tempdir.path }}/gau"
-    dest: "{{ bin_dir }}/gau"
-    mode: "0755"
-
-- name: Remove Temporary Directory
-  file:
-    path: "{{ tempdir.path }}"
-    state: absent
+- import_tasks: install_github_archive.yml
+  vars:
+    repo: lc/gau
+    file: gau_{{ tag | replace('v', '') }}_linux_amd64.tar.gz
+    copy:
+      - { src: "gau", dest: "{{ bin_dir }}/gau", mode: "0755" }

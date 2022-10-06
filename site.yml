@@ -1,11 +1,15 @@
 ---
 - hosts: localhost
+  connection: local
+  gather_facts: false
   vars:
     base_dir: "{{ lookup('env', 'HOME') }}/.local"
     bin_dir: "{{ base_dir }}/bin"
     man_dir: "{{ base_dir }}/share/man"
     opt_dir: "{{ base_dir }}/opt"
     release: latest  # default, override in individual role calls
+    github_metadata_url: "https://api.github.com/repos/{{ repo }}/releases/{{ release }}"
+    github_download_url: "https://github.com/{{ repo }}/releases/download/{{ tag }}/{{ file }}"
   pre_tasks:
     - name: Create {{ base_dir }} Directory
       file:
@@ -42,6 +46,11 @@
         content: ""
         dest: "{{ base_dir }}/.nobackup"
         force: false
+    - name: Install Package Requirements
+      dnf:
+        name: python3-virtualenv
+        state: present
+      become: true
   roles:
     - aws-vault
     - awscliv2

@@ -1,0 +1,24 @@
+# vim: ft=yaml.ansible
+---
+- name: Fetch GitHub Metadata
+  uri:
+    url: https://api.github.com/repos/{{ repo }}/releases/{{ release }}
+    return_content: true
+  register: release_metadata
+
+- name: Clone Repository
+  git:
+    repo: https://github.com/{{ repo }}.git
+    dest: "{{ opt_dir }}/{{ dest }}"
+    version: "{{ tag }}"
+  vars:
+    tag: "{{ release_metadata.content | from_json | json_query('tag_name') }}"
+
+- name: Link Files
+  file:
+    src: "{{ opt_dir }}/{{ dest }}/{{ item.src }}"
+    dest: "{{ item.dest }}"
+    state: link
+  vars:
+    tag: "{{ release_metadata.content | from_json | json_query('tag_name') }}"
+  loop: "{{ link }}"

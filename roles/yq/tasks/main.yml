@@ -1,18 +1,6 @@
 ---
-- name: Get Release Metadata
-  uri:
-    url: https://api.github.com/repos/mikefarah/yq/releases/{{ release }}
-    return_content: true
-  register: release_metadata
-
-- name: Get Release URL
-  shell:
-    cmd: jq -r '.assets[] | select(.browser_download_url | match("linux_amd64$")) | .browser_download_url'  # yamllint disable-line rule:line-length
-    stdin: "{{ release_metadata.content | string }}"
-  register: release_url
-
-- name: Download Release
-  get_url:
-    url: "{{ release_url.stdout }}"
-    dest: "{{ bin_dir }}/yq"
-    mode: "0755"
+- import_tasks: install_github_file.yml
+  vars:
+    repo: mikefarah/yq
+    file: yq_linux_amd64
+    dest: yq

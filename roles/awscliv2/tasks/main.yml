@@ -2,19 +2,20 @@
 - name: Create Temporary Directory
   tempfile:
     state: directory
-  register: tf
+  register: tempdir
+  changed_when: false
 
 - name: Download Latest
   unarchive:
     src: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
-    dest: "{{ tf.path }}"
+    dest: "{{ tempdir.path }}"
     remote_src: true
   when: release == 'latest'
 
 - name: Download Release
   unarchive:
     src: "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-{{ release }}.zip"  # yamllint disable-line rule:line-length
-    dest: "{{ tf.path }}"
+    dest: "{{ tempdir.path }}"
     remote_src: true
   when: release != 'latest'
 
@@ -28,9 +29,10 @@
       - "{{ bin_dir }}"
       - --update
   args:
-    chdir: "{{ tf.path }}"
+    chdir: "{{ tempdir.path }}"
 
 - name: Remove Temporary Directory
   file:
-    path: "{{ tf.path }}"
+    path: "{{ tempdir.path }}"
     state: absent
+  changed_when: false

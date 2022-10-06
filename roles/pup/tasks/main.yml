@@ -1,34 +1,7 @@
 ---
-- name: Get Release Metadata
-  uri:
-    url: https://api.github.com/repos/ericchiang/pup/releases/{{ release }}
-    return_content: true
-  register: release_metadata
-
-- name: Get Release URL
-  shell:
-    cmd: jq -r '.assets[] | select(.browser_download_url | match("linux_amd64")) | .browser_download_url'  # yamllint disable-line rule:line-length
-    stdin: "{{ release_metadata.content | string }}"
-  register: release_url
-
-- name: Create Temporary Directory
-  tempfile:
-    state: directory
-  register: tempdir
-
-- name: Download Release
-  unarchive:
-    src: "{{ release_url.stdout }}"
-    dest: "{{ tempdir.path }}"
-    remote_src: true
-
-- name: Install Release
-  copy:
-    src: "{{ tempdir.path }}/pup"
-    dest: "{{ bin_dir }}/pup"
-    mode: "0755"
-
-- name: Remove Temporary Directory
-  file:
-    path: "{{ tempdir.path }}"
-    state: absent
+- import_tasks: install_github_archive.yml
+  vars:
+    repo: ericchiang/pup
+    file: pup_{{ tag }}_linux_amd64.zip
+    copy:
+      - { src: "pup", dest: "{{ bin_dir }}/pup", mode: "0755" }

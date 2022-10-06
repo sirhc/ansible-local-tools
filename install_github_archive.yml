@@ -1,0 +1,37 @@
+# vim: ft=yaml.ansible
+---
+- name: Fetch GitHub Metadata
+  uri:
+    url: https://api.github.com/repos/{{ repo }}/releases/{{ release }}
+    return_content: true
+  register: release_metadata
+
+- name: Create Temporary Directory
+  tempfile:
+    state: directory
+  register: tempdir
+  changed_when: false
+
+- name: Download Archive
+  unarchive:
+    src: "{{ github_download_url }}"
+    dest: "{{ tempdir.path }}"
+    remote_src: true
+  vars:
+    tag: "{{ release_metadata.content | from_json | json_query('tag_name') }}"
+  changed_when: false
+
+- name: Install Files
+  copy:
+    src: "{{ tempdir.path }}/{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode }}"
+  vars:
+    tag: "{{ release_metadata.content | from_json | json_query('tag_name') }}"
+  loop: "{{ copy }}"
+
+- name: Remove Temporary Directory
+  file:
+    path: "{{ tempdir.path }}"
+    state: absent
+  changed_when: false

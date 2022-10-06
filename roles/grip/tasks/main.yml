@@ -1,17 +1,6 @@
 ---
-- name: Install Requirements
-  dnf:
-    name: python3-virtualenv
-    state: present
-  become: true
-
-- name: Install Module
-  pip:
-    name: grip
-    virtualenv: "{{ opt_dir }}/grip"
-
-- name: Create Link
-  file:
-    src: "{{ opt_dir }}/grip/bin/grip"
-    dest: "{{ bin_dir }}/grip"
-    state: link
+- import_tasks: install_pip.yml
+  vars:
+    module: grip
+    env: grip
+    cmd: grip

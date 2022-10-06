@@ -1,17 +1,6 @@
 ---
-- name: Install Requirements
-  dnf:
-    name: python3-virtualenv
-    state: present
-  become: true
-
-- name: Install Module
-  pip:
-    name: epy-reader
-    virtualenv: "{{ opt_dir }}/epy"
-
-- name: Create Link
-  file:
-    src: "{{ opt_dir }}/epy/bin/epy"
-    dest: "{{ bin_dir }}/epy"
-    state: link
+- import_tasks: install_pip.yml
+  vars:
+    module: epy-reader
+    env: epy
+    cmd: epy

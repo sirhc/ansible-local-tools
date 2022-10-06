@@ -1,34 +1,7 @@
 ---
-- name: Get Release Metadata
-  uri:
-    url: https://api.github.com/repos/gohugoio/hugo/releases/{{ release }}
-    return_content: true
-  register: release_metadata
-
-- name: Get Release URL
-  shell:
-    cmd: jq -r '.assets[] | select(.browser_download_url | match("Linux-64bit.tar.gz")) | .browser_download_url'  # yamllint disable-line rule:line-length
-    stdin: "{{ release_metadata.content | string }}"
-  register: release_url
-
-- name: Create Temporary Directory
-  tempfile:
-    state: directory
-  register: tempdir
-
-- name: Download Release
-  unarchive:
-    src: "{{ release_url.stdout_lines[0] }}"
-    dest: "{{ tempdir.path }}"
-    remote_src: true
-
-- name: Install Release
-  copy:
-    src: "{{ tempdir.path }}/hugo"
-    dest: "{{ bin_dir }}/hugo"
-    mode: "0755"
-
-- name: Remove Temporary Directory
-  file:
-    path: "{{ tempdir.path }}"
-    state: absent
+- import_tasks: install_github_archive.yml
+  vars:
+    repo: gohugoio/hugo
+    file: hugo_{{ tag | replace('v', '') }}_Linux-64bit.tar.gz
+    copy:
+      - { src: "hugo", dest: "{{ bin_dir }}/hugo", mode: "0755" }

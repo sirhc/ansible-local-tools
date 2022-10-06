@@ -1,0 +1,15 @@
+# vim: ft=yaml.ansible
+---
+- name: Fetch GitHub Metadata
+  uri:
+    url: https://api.github.com/repos/{{ repo }}/releases/{{ release }}
+    return_content: true
+  register: release_metadata
+
+- name: Download GitHub Release
+  get_url:
+    url: "{{ github_download_url }}"
+    dest: "{{ bin_dir }}/{{ dest }}"
+    mode: "0755"
+  vars:
+    tag: "{{ release_metadata.content | from_json | json_query('tag_name') }}"

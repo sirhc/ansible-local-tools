@@ -1,0 +1,12 @@
+# vim: ft=yaml.ansible
+---
+- name: Install Module
+  pip:
+    name: "{{ module }}"
+    virtualenv: "{{ opt_dir }}/{{ env }}"
+
+- name: Create Link
+  file:
+    src: "{{ opt_dir }}/{{ env }}/bin/{{ cmd }}"
+    dest: "{{ bin_dir }}/{{ cmd }}"
+    state: link
