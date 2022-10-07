@@ -22,13 +22,15 @@
 
 - name: AWS CLI Version
   shell:
-    cmd: ./tmp/aws/dist/aws --version
+    cmd: ./aws/dist/aws --version
+  args:
+    chdir: "{{ tempdir.path }}"
   register: aws_version
   changed_when: false
 
 - name: AWS CLI Installed
   stat:
-    path: "{{ opt_dir }}/awscli/v2/{{ aws_version | regex_search('aws-cli/(\\S+)', '\\1') | first }}"
+    path: "{{ opt_dir }}/awscli/v2/{{ aws_version | regex_search('aws-cli/(\\S+)', '\\1') | first }}"  # yamllint disable-line rule:line-length
   register: aws_version_installed
 
 - name: Install
