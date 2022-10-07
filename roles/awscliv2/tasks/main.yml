@@ -11,6 +11,7 @@
     dest: "{{ tempdir.path }}"
     remote_src: true
   when: release == 'latest'
+  changed_when: false
 
 - name: Download Release
   unarchive:
@@ -18,6 +19,17 @@
     dest: "{{ tempdir.path }}"
     remote_src: true
   when: release != 'latest'
+
+- name: AWS CLI Version
+  shell:
+    cmd: ./tmp/aws/dist/aws --version
+  register: aws_version
+  changed_when: false
+
+- name: AWS CLI Installed
+  stat:
+    path: "{{ opt_dir }}/awscli/v2/{{ aws_version | regex_search('aws-cli/(\\S+)', '\\1') | first }}"
+  register: aws_version_installed
 
 - name: Install
   command:
@@ -30,6 +42,7 @@
       - --update
   args:
     chdir: "{{ tempdir.path }}"
+  when: not aws_version_installed.stat.exists
 
 - name: Remove Temporary Directory
   file:
