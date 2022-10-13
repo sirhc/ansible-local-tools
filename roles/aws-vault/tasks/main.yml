@@ -9,8 +9,10 @@
   command: "{{ bin_dir }}/aws-vault --completion-script-zsh"
   register: completion
   changed_when: false
+  when: false
 
 - name: Create Completion Function
   copy:
     dest: "{{ base_dir }}/share/zsh/site-functions/_aws-vault"
     content: "{{ completion.stdout }}"
+  when: false

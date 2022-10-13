@@ -2,6 +2,6 @@
 - import_tasks: install_github_archive.yml
   vars:
     repo: gohugoio/hugo
-    file: hugo_{{ tag | replace('v', '') }}_Linux-64bit.tar.gz
+    file: hugo_{{ release_tag | replace('v', '') }}_Linux-64bit.tar.gz
     copy:
-      - { src: "hugo", dest: "{{ bin_dir }}/hugo", mode: "0755" }
+      - {src: "hugo", dest: "{{ bin_dir }}/hugo", mode: "0755"}

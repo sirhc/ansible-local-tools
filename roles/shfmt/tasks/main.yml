@@ -2,5 +2,5 @@
 - import_tasks: install_github_file.yml
   vars:
     repo: mvdan/sh
-    file: shfmt_{{ tag }}_linux_amd64
+    file: shfmt_{{ release_tag }}_linux_amd64
     dest: shfmt

@@ -4,6 +4,6 @@
     repo: mfaerevaag/wd
     dest: wd
     link:
-      - { src: "wd.sh", dest: "{{ bin_dir }}/wd.sh" }
-      - { src: "wd.1", dest: "{{ man_dir }}/man1/wd.1" }
-      - { src: "_wd.sh", dest: "{{ base_dir }}/share/zsh/site-functions/_wd" }
+      - {src: "wd.sh", dest: "{{ bin_dir }}/wd.sh"}
+      - {src: "wd.1", dest: "{{ man_dir }}/man1/wd.1"}
+      - {src: "_wd.sh", dest: "{{ base_dir }}/share/zsh/site-functions/_wd"}

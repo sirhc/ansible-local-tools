@@ -1,53 +1,58 @@
+# yamllint disable rule:line-length
 ---
-- name: Create Temporary Directory
-  tempfile:
-    state: directory
-  register: tempdir
-  changed_when: false
-
-- name: Download Latest
-  unarchive:
-    src: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
-    dest: "{{ tempdir.path }}"
-    remote_src: true
-  when: release == 'latest'
-  changed_when: false
-
-- name: Download Release
-  unarchive:
-    src: "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-{{ release }}.zip"  # yamllint disable-line rule:line-length
-    dest: "{{ tempdir.path }}"
-    remote_src: true
+- name: Set Release
+  set_fact:
+    release_tag: "{{ release }}"
   when: release != 'latest'
 
-- name: AWS CLI Version
-  shell:
-    cmd: ./aws/dist/aws --version
-  args:
-    chdir: "{{ tempdir.path }}"
-  register: aws_version
-  changed_when: false
+- name: Get Release
+  block:
+    - shell: |
+        curl -fsSL https://raw.githubusercontent.com/aws/aws-cli/v2/CHANGELOG.rst | grep -E '^[0-9.]+$' | head -1
+      register: latest_release
+      changed_when: false
 
-- name: AWS CLI Installed
-  stat:
-    path: "{{ opt_dir }}/awscli/v2/{{ aws_version | regex_search('aws-cli/(\\S+)', '\\1') | first }}"  # yamllint disable-line rule:line-length
-  register: aws_version_installed
+    - set_fact:
+        release_tag: "{{ latest_release.stdout }}"
+  when: release == 'latest'
 
-- name: Install
-  command:
-    argv:
-      - ./aws/install
-      - --install-dir
-      - "{{ opt_dir }}/awscli"
-      - --bin-dir
-      - "{{ bin_dir }}"
-      - --update
-  args:
-    chdir: "{{ tempdir.path }}"
-  when: not aws_version_installed.stat.exists
+- import_tasks: manifest_read.yml
+  vars:
+    repo: awscliv2
 
-- name: Remove Temporary Directory
-  file:
-    path: "{{ tempdir.path }}"
-    state: absent
-  changed_when: false
+- name: Install Package
+  block:
+    - name: Create Temporary Directory
+      tempfile:
+        state: directory
+      register: tempdir
+      changed_when: false
+
+    - name: Download Release
+      unarchive:
+        src: "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-{{ release_tag }}.zip"
+        dest: "{{ tempdir.path }}"
+        remote_src: true
+
+    - name: Install
+      command:
+        argv:
+          - ./aws/install
+          - --install-dir
+          - "{{ opt_dir }}/awscli"
+          - --bin-dir
+          - "{{ bin_dir }}"
+          - --update
+      args:
+        chdir: "{{ tempdir.path }}"
+
+    - name: Remove Temporary Directory
+      file:
+        path: "{{ tempdir.path }}"
+        state: absent
+      changed_when: false
+
+    - import_tasks: manifest_write.yml
+      vars:
+        repo: awscliv2
+  when: release_tag != installed_tag | default('')

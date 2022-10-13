@@ -4,4 +4,4 @@
     repo: terraform-linters/tflint
     file: tflint_linux_amd64.zip
     copy:
-      - { src: "tflint", dest: "{{ bin_dir }}/tflint", mode: "0755" }
+      - {src: "tflint", dest: "{{ bin_dir }}/tflint", mode: "0755"}

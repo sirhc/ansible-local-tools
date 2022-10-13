@@ -1,4 +1,5 @@
 # vim: ft=yaml.ansible
+# yamllint disable rule:line-length
 ---
 - name: Fetch GitHub Metadata
   uri:
@@ -6,32 +7,39 @@
     return_content: true
   register: release_metadata
 
-- name: Create Temporary Directory
-  tempfile:
-    state: directory
-  register: tempdir
-  changed_when: false
+- name: Set Release Tag
+  set_fact:
+    release_tag: "{{ release_metadata.content | from_json | json_query('tag_name') }}"
 
-- name: Download Archive
-  unarchive:
-    src: "{{ github_download_url }}"
-    dest: "{{ tempdir.path }}"
-    remote_src: true
-  vars:
-    tag: "{{ release_metadata.content | from_json | json_query('tag_name') }}"
-  changed_when: false
+- import_tasks: manifest_read.yml
 
-- name: Install Files
-  copy:
-    src: "{{ tempdir.path }}/{{ item.src }}"
-    dest: "{{ item.dest }}"
-    mode: "{{ item.mode }}"
-  vars:
-    tag: "{{ release_metadata.content | from_json | json_query('tag_name') }}"
-  loop: "{{ copy }}"
+- name: Install Package
+  block:
+    - name: Create Temporary Directory
+      tempfile:
+        state: directory
+      register: tempdir
+      changed_when: false
 
-- name: Remove Temporary Directory
-  file:
-    path: "{{ tempdir.path }}"
-    state: absent
-  changed_when: false
+    - name: Download Archive
+      unarchive:
+        src: "{{ github_download_url }}"
+        dest: "{{ tempdir.path }}"
+        remote_src: true
+      changed_when: false
+
+    - name: Install Files
+      copy:
+        src: "{{ tempdir.path }}/{{ item.src }}"
+        dest: "{{ item.dest }}"
+        mode: "{{ item.mode }}"
+      loop: "{{ copy }}"
+
+    - name: Remove Temporary Directory
+      file:
+        path: "{{ tempdir.path }}"
+        state: absent
+      changed_when: false
+
+    - import_tasks: manifest_write.yml
+  when: release_tag != installed_tag | default('')

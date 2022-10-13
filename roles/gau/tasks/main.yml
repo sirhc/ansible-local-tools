@@ -2,6 +2,6 @@
 - import_tasks: install_github_archive.yml
   vars:
     repo: lc/gau
-    file: gau_{{ tag | replace('v', '') }}_linux_amd64.tar.gz
+    file: gau_{{ release_tag | replace('v', '') }}_linux_amd64.tar.gz
     copy:
-      - { src: "gau", dest: "{{ bin_dir }}/gau", mode: "0755" }
+      - {src: "gau", dest: "{{ bin_dir }}/gau", mode: "0755"}

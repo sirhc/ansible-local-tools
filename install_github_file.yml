@@ -1,15 +1,29 @@
 # vim: ft=yaml.ansible
+# yamllint disable rule:line-length
 ---
 - name: Fetch GitHub Metadata
   uri:
+    headers:
+      Accept: application/vnd.github.v3+json
+      Authorization: token {{ github_token }}
     url: https://api.github.com/repos/{{ repo }}/releases/{{ release }}
     return_content: true
   register: release_metadata
 
-- name: Download GitHub Release
-  get_url:
-    url: "{{ github_download_url }}"
-    dest: "{{ bin_dir }}/{{ dest }}"
-    mode: "0755"
-  vars:
-    tag: "{{ release_metadata.content | from_json | json_query('tag_name') }}"
+- name: Set Release Tag
+  set_fact:
+    release_tag: "{{ release_metadata.content | from_json | json_query('tag_name') }}"
+
+- import_tasks: manifest_read.yml
+
+- name: Install Package
+  block:
+    - name: Download GitHub Release
+      get_url:
+        url: "{{ github_download_url }}"
+        dest: "{{ bin_dir }}/{{ dest }}"
+        mode: "0755"
+      when: false
+
+    - import_tasks: manifest_write.yml
+  when: release_tag != installed_tag | default('')

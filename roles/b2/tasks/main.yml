@@ -7,7 +7,7 @@
 
 - name: Install Completion Function
   get_url:
-    url: https://raw.githubusercontent.com/Backblaze/B2_Command_Line_Tool/master/contrib/bash_completion/b2
+    url: https://raw.githubusercontent.com/Backblaze/B2_Command_Line_Tool/master/contrib/bash_completion/b2  # yamllint disable-line rule:line-length
     dest: "{{ base_dir }}/share/zsh/site-functions/_b2"
     mode: "0644"
 

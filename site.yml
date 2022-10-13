@@ -1,3 +1,4 @@
+# yamllint disable rule:line-length
 ---
 - hosts: localhost
   connection: local
@@ -8,8 +9,11 @@
     man_dir: "{{ base_dir }}/share/man"
     opt_dir: "{{ base_dir }}/opt"
     release: latest  # default, override in individual role calls
-    github_metadata_url: "https://api.github.com/repos/{{ repo }}/releases/{{ release }}"        # yamllint disable-line rule:line-length
-    github_download_url: "https://github.com/{{ repo }}/releases/download/{{ tag }}/{{ file }}"  # yamllint disable-line rule:line-length
+    github_metadata_url: "https://api.github.com/repos/{{ repo }}/releases/{{ release }}"
+    github_download_url: "https://github.com/{{ repo }}/releases/download/{{ release_tag }}/{{ file }}"
+    manifest_file: "{{ lookup('env', 'XDG_CONFIG_HOME') or lookup('env', 'HOME') + '/.config' + '/local-tools-manifest.json' }}"
+  vars_files:
+    - github_token.yml
   pre_tasks:
     - name: Create Directories
       file:
@@ -28,11 +32,17 @@
         content: ""
         dest: "{{ base_dir }}/.nobackup"
         force: false
+    - name: Create Manifest File
+      copy:
+        content: "{}"
+        dest: "{{ manifest_file }}"
+        force: false
     - name: Install Package Requirements
       dnf:
         name: python3-virtualenv
         state: present
       become: true
+      when: false
   roles:
     - aws-vault
     - awscliv2

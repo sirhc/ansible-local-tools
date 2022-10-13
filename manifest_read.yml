@@ -1,0 +1,7 @@
+# vim: ft=yaml.ansible
+# yamllint disable rule:line-length
+---
+- name: Read Manifest Tag
+  set_fact:
+    installed_tag: "{{ lookup('file', manifest_file) | from_json | json_query('\"' + repo | basename + '\".tag') }}"
+  ignore_errors: true

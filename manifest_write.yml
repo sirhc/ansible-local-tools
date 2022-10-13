@@ -1,0 +1,13 @@
+# vim: ft=yaml.ansible
+# yamllint disable rule:line-length
+---
+- name: Generate New Manifest
+  shell: |
+    jq -S '."{{ repo | basename }}".tag = "{{ release_tag }}"' {{ manifest_file }}
+  register: manifest
+  changed_when: false
+
+- name: Write New Manifest
+  copy:
+    content: "{{ manifest.stdout }}"
+    dest: "{{ manifest_file }}"
