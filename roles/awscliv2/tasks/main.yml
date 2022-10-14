@@ -56,3 +56,10 @@
       vars:
         repo: awscliv2
   when: release_tag != installed_tag | default('')
+
+- name: Remove Old Versions
+  shell: |
+    find {{ opt_dir }}/awscli/v2 -mindepth 1 -maxdepth 1 -type d \! -name "$(basename "$(readlink -f {{ opt_dir }}/awscli/v2/current)")" -print -exec rm -rf '{}' +
+  register: find
+  changed_when: find.stdout != ""
+  failed_when: find.rc != 0
