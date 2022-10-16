@@ -23,7 +23,6 @@
         url: "{{ github_download_url }}"
         dest: "{{ bin_dir }}/{{ dest }}"
         mode: "0755"
-      when: false
 
     - import_tasks: manifest_write.yml
   when: release_tag != installed_tag | default('')
