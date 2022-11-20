@@ -1,0 +1,7 @@
+---
+- import_tasks: install_pip.yml
+  vars:
+    module:
+      - git+https://github.com/flother/htmltab
+    env: htmltab
+    cmd: htmltab
