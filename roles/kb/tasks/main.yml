@@ -1,0 +1,7 @@
+---
+- import_tasks: install_pip.yml
+  vars:
+    module:
+      - kb-manager
+    env: kb-manager
+    cmd: kb
