@@ -8,13 +8,13 @@
 
 - name: Set Release Tag
   set_fact:
-    release_tag: "{{ release_metadata.content | from_json | json_query('tag_name') }}"  # yamllint disable-line rule:line-length
+    release_ref: "{{ release_metadata.content | from_json | json_query('tag_name') }}"  # yamllint disable-line rule:line-length
 
 - name: Clone Repository
   git:
     repo: https://github.com/{{ repo }}.git
     dest: "{{ opt_dir }}/{{ dest }}"
-    version: "{{ release_tag }}"
+    version: "{{ release_ref }}"
 
 - name: Link Files
   file:

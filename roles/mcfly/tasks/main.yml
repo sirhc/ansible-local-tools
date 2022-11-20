@@ -2,6 +2,6 @@
 - import_tasks: install_github_archive.yml
   vars:
     repo: cantino/mcfly
-    file: mcfly-{{ release_tag }}-x86_64-unknown-linux-musl.tar.gz
+    file: mcfly-{{ release_ref }}-x86_64-unknown-linux-musl.tar.gz
     copy:
       - {src: "mcfly", dest: "{{ bin_dir }}/mcfly", mode: "0755"}

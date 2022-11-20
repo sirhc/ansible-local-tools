@@ -9,7 +9,7 @@
 
 - name: Set Release Tag
   set_fact:
-    release_tag: "{{ release_metadata.content | from_json | json_query('tag_name') }}"
+    release_ref: "{{ release_metadata.content | from_json | json_query('tag_name') }}"
 
 - import_tasks: manifest_read.yml
 
@@ -42,4 +42,4 @@
       changed_when: false
 
     - import_tasks: manifest_write.yml
-  when: release_tag != installed_tag | default('')
+  when: release_ref != installed_ref | default('')

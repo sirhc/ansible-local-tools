@@ -2,7 +2,7 @@
 ---
 - name: Set Release
   set_fact:
-    release_tag: "{{ release }}"
+    release_ref: "{{ release }}"
   when: release != 'latest'
 
 - name: Get Release
@@ -13,7 +13,7 @@
       changed_when: false
 
     - set_fact:
-        release_tag: "{{ latest_release.stdout }}"
+        release_ref: "{{ latest_release.stdout }}"
   when: release == 'latest'
 
 - import_tasks: manifest_read.yml
@@ -30,7 +30,7 @@
 
     - name: Download Release
       unarchive:
-        src: "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-{{ release_tag }}.zip"
+        src: "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-{{ release_ref }}.zip"
         dest: "{{ tempdir.path }}"
         remote_src: true
 
@@ -55,7 +55,7 @@
     - import_tasks: manifest_write.yml
       vars:
         repo: awscliv2
-  when: release_tag != installed_tag | default('')
+  when: release_ref != installed_ref | default('')
 
 - name: Remove Old Versions
   shell: |
