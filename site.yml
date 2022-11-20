@@ -11,7 +11,7 @@
     release: latest  # default, override in individual role calls
     github_metadata_url: "https://api.github.com/repos/{{ repo }}/releases/{{ release }}"
     github_download_url: "https://github.com/{{ repo }}/releases/download/{{ release_ref }}/{{ file }}"
-    manifest_file: "{{ lookup('env', 'XDG_CONFIG_HOME') or lookup('env', 'HOME') + '/.config' + '/local-tools-manifest.json' }}"
+    manifest_file: "{{ (lookup('env', 'XDG_DATA_HOME') or (lookup('env', 'HOME') + '/.local/share')) + '/ansible-local-tools/manifest.json' }}"
   vars_files:
     - github_token.yml
   pre_tasks:
@@ -27,6 +27,7 @@
         - "{{ man_dir }}/man1"
         - "{{ opt_dir }}"
         - "{{ base_dir }}/share/zsh/site-functions"
+        - "{{ manifest_file | dirname }}"
     - name: Disable Restic Backups
       copy:
         content: ""
