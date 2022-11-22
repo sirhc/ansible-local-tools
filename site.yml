@@ -1,73 +1,20 @@
-# yamllint disable rule:line-length
 ---
-- hosts: all
-  connection: local
+- hosts: local
   gather_facts: false
-  vars:
-    base_dir: "{{ lookup('env', 'HOME') }}/.local"
-    bin_dir: "{{ base_dir }}/bin"
-    man_dir: "{{ base_dir }}/share/man"
-    opt_dir: "{{ base_dir }}/opt"
-    release: latest  # default, override in individual role calls
-    github_metadata_url: "https://api.github.com/repos/{{ repo }}/releases/{{ release }}"
-    github_download_url: "https://github.com/{{ repo }}/releases/download/{{ release_ref }}/{{ file }}"
-    manifest_file: "{{ (lookup('env', 'XDG_DATA_HOME') or (lookup('env', 'HOME') + '/.local/share')) + '/ansible-local-tools/manifest.json' }}"
   vars_files:
     - github_token.yml
   pre_tasks:
-    - name: Create Directories
-      file:
-        path: "{{ item }}"
-        state: directory
-        mode: "0755"
-      loop:
-        - "{{ base_dir }}"
-        - "{{ bin_dir }}"
-        - "{{ man_dir }}"
-        - "{{ man_dir }}/man1"
-        - "{{ opt_dir }}"
-        - "{{ base_dir }}/share/zsh/site-functions"
-        - "{{ manifest_file | dirname }}"
-    - name: Disable Restic Backups
+    - name: Read Manifest
+      set_fact:
+        manifest: "{{ lookup('file', manifest_file) | from_json }}"
+      ignore_errors: true
+    - debug: var=manifest verbosity=1
+  post_tasks:
+    - debug: var=manifest verbosity=1
+    - name: Write Manifest
       copy:
-        content: ""
-        dest: "{{ base_dir }}/.nobackup"
-        force: false
-    - name: Create Manifest File
-      copy:
-        content: "{}"
+        content: "{{ manifest | to_json }}"
         dest: "{{ manifest_file }}"
-        force: false
-    - name: Gather Package Facts
-      package_facts:
-        manager: auto
-    - name: Install Package Requirements
-      dnf:
-        name: python3-virtualenv
-        state: present
-      become: true
-      when: "not 'python3-virtualenv' in ansible_facts.packages"
   roles:
-    - aws-vault
-    - awscliv2
-    - b2
-    - epy
-    - fd
-    - gau
-    - granted
-    - greg
-    - grip
-    - htmltab
-    - hugo
-    - humblebundle-downloader
-    - hwatch
-    - jp
-    - kb
-    - mcfly
-    - pup
-    - rich
-    - shfmt
-    - tflint
-    - todoist
-    - wd
-    - yq
+    - common
+    - tools

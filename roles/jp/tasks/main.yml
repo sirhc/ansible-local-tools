@@ -1,6 +1,0 @@
----
-- import_tasks: install_github_file.yml
-  vars:
-    repo: jmespath/jp
-    file: jp-linux-amd64
-    dest: jp

@@ -1,6 +1,0 @@
----
-- import_tasks: install_github_file.yml
-  vars:
-    repo: mikefarah/yq
-    file: yq_linux_amd64
-    dest: yq

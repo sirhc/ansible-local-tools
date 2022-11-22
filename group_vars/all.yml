@@ -1,0 +1,38 @@
+---
+local_dir: "{{ lookup('env', 'HOME') }}/.local"
+bin_dir:   "{{ local_dir }}/bin"
+opt_dir:   "{{ local_dir }}/opt"
+data_dir:  "{{ local_dir }}/share"
+man_dir:   "{{ data_dir }}/man"
+
+manifest_file: "{{ data_dir }}/ansible-local-tools/manifest.json"
+
+release: latest  # default, override in individual role calls
+
+github_metadata_url: "https://api.github.com/repos/{{ repo }}/releases/{{ release }}"
+github_download_url: "https://github.com/{{ repo }}/releases/download/{{ release_ref }}"
+
+tools:
+  - aws-vault
+  - awscliv2
+  - b2
+  - epy
+  - fd
+  - gau
+  - granted
+  - greg
+  - grip
+  - htmltab
+  - hugo
+  - humblebundle-downloader
+  - hwatch
+  - jp
+  - kb
+  - mcfly
+  - pup
+  - rich
+  - shfmt
+  - tflint
+  - todoist
+  - wd
+  - yq

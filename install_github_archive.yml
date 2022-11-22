@@ -1,45 +1,15 @@
-# vim: ft=yaml.ansible
-# yamllint disable rule:line-length
 ---
-- name: Fetch GitHub Metadata
-  uri:
-    url: https://api.github.com/repos/{{ repo }}/releases/{{ release }}
-    return_content: true
-  register: release_metadata
+- import_tasks: github_repodata.yml
 
-- name: Set Release Tag
-  set_fact:
-    release_ref: "{{ release_metadata.content | from_json | json_query('tag_name') }}"
-
-- import_tasks: manifest_read.yml
-
-- name: Install Package
+- name: Install GitHub Archive
   block:
-    - name: Create Temporary Directory
-      tempfile:
-        state: directory
-      register: tempdir
-      changed_when: false
+    - debug:
+        msg: "Installing {{ tool }} from {{ repo }} {{ release_ref }}"
 
-    - name: Download Archive
-      unarchive:
-        src: "{{ github_download_url }}"
-        dest: "{{ tempdir.path }}"
-        remote_src: true
-      changed_when: false
+    - import_tasks: install_remote_archive.yml
+      vars:
+        url: "{{ github_download_url }}/{{ file }}"
 
-    - name: Install Files
-      copy:
-        src: "{{ tempdir.path }}/{{ item.src }}"
-        dest: "{{ item.dest }}"
-        mode: "{{ item.mode }}"
-      loop: "{{ copy }}"
-
-    - name: Remove Temporary Directory
-      file:
-        path: "{{ tempdir.path }}"
-        state: absent
-      changed_when: false
-
-    - import_tasks: manifest_write.yml
+    - set_fact:
+        installed_ref: "{{ release_ref }}"
   when: release_ref != installed_ref | default('')

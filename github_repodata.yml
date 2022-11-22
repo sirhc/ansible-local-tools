@@ -1,0 +1,24 @@
+---
+- name: Read GitHub Repository Metadata
+  uri:
+    headers:
+      Accept: application/vnd.github.v3+json
+      Authorization: token {{ github_token }}
+    url: "https://api.github.com/repos/{{ repo }}"
+    return_content: true
+  register: repodata
+
+- set_fact:
+    default_branch: "{{ repodata.content | from_json | json_query('default_branch') }}"
+
+- name: Read GitHub Repository Latest Release
+  uri:
+    headers:
+      Accept: application/vnd.github.v3+json
+      Authorization: token {{ github_token }}
+    url: https://api.github.com/repos/{{ repo }}/releases/{{ release }}
+    return_content: true
+  register: repodata
+
+- set_fact:
+    release_ref: "{{ repodata.content | from_json | json_query('tag_name') }}"

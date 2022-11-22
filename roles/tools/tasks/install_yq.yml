@@ -1,0 +1,6 @@
+---
+- import_tasks: install_github_files.yml
+  vars:
+    repo: mikefarah/yq
+    copy:
+      - {src: "yq_linux_amd64", dest: "{{ bin_dir }}/yq", mode: "0755"}

@@ -1,7 +1,0 @@
----
-- import_tasks: install_github_archive.yml
-  vars:
-    repo: ericchiang/pup
-    file: pup_{{ release_ref }}_linux_amd64.zip
-    copy:
-      - {src: "pup", dest: "{{ bin_dir }}/pup", mode: "0755"}

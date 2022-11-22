@@ -1,0 +1,17 @@
+---
+- import_tasks: github_repodata.yml
+
+- name: Install GitHub File
+  block:
+    - debug:
+        msg: "Installing {{ tool }} from {{ repo }} {{ release_ref }}"
+
+    - name: Install Files
+      get_url:
+        url: "{{ github_download_url }}/{{ c.src }}"
+        dest: "{{ c.dest }}"
+        mode: "{{ c.mode }}"
+      loop: "{{ copy }}"
+      loop_control:
+        loop_var: c
+  when: release_ref != installed_ref | default('')

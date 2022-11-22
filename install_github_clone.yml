@@ -1,24 +1,26 @@
-# vim: ft=yaml.ansible
 ---
-- name: Fetch GitHub Metadata
-  uri:
-    url: https://api.github.com/repos/{{ repo }}/releases/{{ release }}
-    return_content: true
-  register: release_metadata
+- import_tasks: github_repodata.yml
 
-- name: Set Release Tag
-  set_fact:
-    release_ref: "{{ release_metadata.content | from_json | json_query('tag_name') }}"  # yamllint disable-line rule:line-length
+- name: Install GitHub Clone
+  block:
+    - debug:
+        msg: "Installing {{ tool }} from {{ repo }} {{ release_ref }}"
 
-- name: Clone Repository
-  git:
-    repo: https://github.com/{{ repo }}.git
-    dest: "{{ opt_dir }}/{{ dest }}"
-    version: "{{ release_ref }}"
+    - name: Clone Repository
+      git:
+        repo: https://github.com/{{ repo }}.git
+        dest: "{{ opt_dir }}/{{ dest }}"
+        version: "{{ release_ref }}"
 
-- name: Link Files
-  file:
-    src: "{{ opt_dir }}/{{ dest }}/{{ item.src }}"
-    dest: "{{ item.dest }}"
-    state: link
-  loop: "{{ link }}"
+    - name: Link Files
+      file:
+        src: "{{ opt_dir }}/{{ dest }}/{{ l.src }}"
+        dest: "{{ l.dest }}"
+        state: link
+      loop: "{{ link }}"
+      loop_control:
+        loop_var: l
+
+    - set_fact:
+        installed_ref: "{{ release_ref }}"
+  when: release_ref != installed_ref | default('')

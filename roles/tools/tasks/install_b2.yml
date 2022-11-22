@@ -1,0 +1,19 @@
+---
+- import_tasks: install_github_files.yml
+  vars:
+    repo: Backblaze/B2_Command_Line_Tool
+    copy:
+      - {src: "b2-linux", dest: "{{ bin_dir }}/b2", mode: "0755"}
+  when: false
+
+# - name: Install Completion Function
+#   get_url:
+#     url: https://raw.githubusercontent.com/Backblaze/B2_Command_Line_Tool/master/contrib/bash_completion/b2
+#     dest: "{{ data_dir }}/zsh/site-functions/_b2"
+#     mode: "0644"
+
+# - name: Add zsh compdef Line
+#   lineinfile:
+#     path: "{{ data_dir }}/zsh/site-functions/_b2"
+#     insertbefore: BOF
+#     line: "#compdef b2"

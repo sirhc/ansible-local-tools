@@ -1,0 +1,6 @@
+---
+- name: Install Tools
+  include_tasks: install.yml
+  vars:
+    tool: "{{ item }}"
+  loop: "{{ tools }}"
