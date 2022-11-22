@@ -2,7 +2,8 @@
 - set_fact:
     installed_ref: "{{ manifest | json_query('\"' + tool + '\".ref') }}"
 
-- include_tasks: "install_{{ tool }}.yml"
+- include_role:
+    name: "install_{{ tool }}"
 
 - name: Update Tool Ref
   set_fact:
