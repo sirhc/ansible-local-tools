@@ -1,5 +1,5 @@
 ---
-- hosts: local
+- hosts: all
   gather_facts: false
   vars_files:
     - github_token.yml
