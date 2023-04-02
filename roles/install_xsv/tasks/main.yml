@@ -1,0 +1,7 @@
+---
+- import_tasks: install_github_archive.yml
+  vars:
+    repo: BurntSushi/xsv
+    file: xsv-{{ release_ref }}-x86_64-unknown-linux-musl.tar.gz
+    copy:
+      - {src: "xsv", dest: "{{ bin_dir }}/xsv", mode: "0755"}

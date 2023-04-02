@@ -35,4 +35,5 @@ tools:
   - tflint
   - todoist
   - wd
+  - xsv
   - yq
