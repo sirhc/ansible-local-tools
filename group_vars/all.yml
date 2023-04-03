@@ -29,6 +29,7 @@ tools:
   - jp
   - kb
   - mcfly
+  - mlr
   - pup
   - rich
   - shfmt
