@@ -1,9 +1,9 @@
 ---
 local_dir: "{{ lookup('env', 'HOME') }}/.local"
-bin_dir:   "{{ local_dir }}/bin"
-opt_dir:   "{{ local_dir }}/opt"
-data_dir:  "{{ local_dir }}/share"
-man_dir:   "{{ data_dir }}/man"
+bin_dir: "{{ local_dir }}/bin"
+opt_dir: "{{ local_dir }}/opt"
+data_dir: "{{ local_dir }}/share"
+man_dir: "{{ data_dir }}/man"
 
 manifest_file: "{{ data_dir }}/ansible-local-tools/manifest.json"
 
