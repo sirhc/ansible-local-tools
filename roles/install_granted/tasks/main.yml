@@ -23,7 +23,3 @@
           - {src: "assume", dest: "{{ bin_dir }}/assume", mode: "0755"}
           - {src: "assumego", dest: "{{ bin_dir }}/assumego", mode: "0755"}
           - {src: "granted", dest: "{{ bin_dir }}/granted", mode: "0755"}
-
-    - set_fact:
-        installed_ref: "{{ release_ref }}"
-  when: release_ref != installed_ref | default('')

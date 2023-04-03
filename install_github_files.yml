@@ -14,7 +14,3 @@
       loop: "{{ copy }}"
       loop_control:
         loop_var: c
-
-    - set_fact:
-        installed_ref: "{{ release_ref }}"
-  when: release_ref != installed_ref | default('')

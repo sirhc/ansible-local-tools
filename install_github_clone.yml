@@ -20,7 +20,3 @@
       loop: "{{ link }}"
       loop_control:
         loop_var: l
-
-    - set_fact:
-        installed_ref: "{{ release_ref }}"
-  when: release_ref != installed_ref | default('')

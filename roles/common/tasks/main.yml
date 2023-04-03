@@ -12,18 +12,11 @@
     - "{{ data_dir }}/zsh/site-functions"
     - "{{ man_dir }}"
     - "{{ man_dir }}/man1"
-    - "{{ manifest_file | dirname }}"
 
 - name: Disable Restic Backups
   copy:
     content: ""
     dest: "{{ local_dir }}/.nobackup"
-    force: false
-
-- name: Create Manifest File
-  copy:
-    content: "{}"
-    dest: "{{ manifest_file }}"
     force: false
 
 - name: Gather Package Facts

@@ -2,25 +2,6 @@
 - hosts: all
   vars_files:
     - github_token.yml
-  pre_tasks:
-    - name: Read Manifest
-      slurp:
-        src: "{{ manifest_file }}"
-      register: slurpfile
-      ignore_errors: true
-    - set_fact:
-        manifest: "{{ slurpfile.content | b64decode | default('{}', true) | from_json }}"
-      when: slurpfile.failed == false
-    - set_fact:
-        manifest: {}
-      when: slurpfile.failed == true
-    - debug: var=manifest verbosity=1
-  post_tasks:
-    - debug: var=manifest verbosity=1
-    - name: Write Manifest
-      copy:
-        content: "{{ manifest | to_json }}"
-        dest: "{{ manifest_file }}"
   roles:
     - common
     - tools

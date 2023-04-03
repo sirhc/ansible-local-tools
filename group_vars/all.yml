@@ -5,8 +5,6 @@ opt_dir: "{{ local_dir }}/opt"
 data_dir: "{{ local_dir }}/share"
 man_dir: "{{ data_dir }}/man"
 
-manifest_file: "{{ data_dir }}/ansible-local-tools/manifest.json"
-
 release: latest  # default, override in individual role calls
 
 github_metadata_url: "https://api.github.com/repos/{{ repo }}/releases/{{ release }}"

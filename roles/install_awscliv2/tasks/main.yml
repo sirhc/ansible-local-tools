@@ -47,10 +47,6 @@
         state: absent
       changed_when: false
 
-    - set_fact:
-        installed_ref: "{{ release_ref }}"
-  when: release_ref != installed_ref | default('')
-
 - name: Remove Old Versions
   shell: |
     find {{ opt_dir }}/awscli/v2 -mindepth 1 -maxdepth 1 -type d \! -name "$(basename "$(readlink -f {{ opt_dir }}/awscli/v2/current)")" -print -exec rm -rf '{}' +

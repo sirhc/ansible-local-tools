@@ -9,7 +9,3 @@
     - import_tasks: install_remote_archive.yml
       vars:
         url: "{{ github_download_url }}/{{ file }}"
-
-    - set_fact:
-        installed_ref: "{{ release_ref }}"
-  when: release_ref != installed_ref | default('')
