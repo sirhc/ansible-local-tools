@@ -17,6 +17,7 @@
 
 - name: Install Files
   copy:
+    remote_src: true
     src: "{{ tempdir.path }}/{{ c.src }}"
     dest: "{{ c.dest }}"
     mode: "{{ c.mode }}"
