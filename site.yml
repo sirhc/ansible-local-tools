@@ -1,13 +1,19 @@
 ---
 - hosts: all
-  gather_facts: false
   vars_files:
     - github_token.yml
   pre_tasks:
     - name: Read Manifest
-      set_fact:
-        manifest: "{{ lookup('file', manifest_file) | from_json }}"
+      slurp:
+        src: "{{ manifest_file }}"
+      register: slurpfile
       ignore_errors: true
+    - set_fact:
+        manifest: "{{ slurpfile.content | b64decode | default('{}', true) | from_json }}"
+      when: slurpfile.failed == false
+    - set_fact:
+        manifest: {}
+      when: slurpfile.failed == true
     - debug: var=manifest verbosity=1
   post_tasks:
     - debug: var=manifest verbosity=1

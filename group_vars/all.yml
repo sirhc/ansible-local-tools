@@ -1,5 +1,5 @@
 ---
-local_dir: "{{ lookup('env', 'HOME') }}/.local"
+local_dir: "{{ ansible_env.HOME }}/.local"
 bin_dir: "{{ local_dir }}/bin"
 opt_dir: "{{ local_dir }}/opt"
 data_dir: "{{ local_dir }}/share"
