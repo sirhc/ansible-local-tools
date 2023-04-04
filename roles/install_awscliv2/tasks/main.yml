@@ -28,6 +28,7 @@
         src: "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-{{ release_ref }}.zip"
         dest: "{{ tempdir.path }}"
         remote_src: true
+      changed_when: false
 
     - name: Install
       command:
