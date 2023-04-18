@@ -33,6 +33,7 @@ tools:
   - shfmt
   - tflint
   - todoist
+  - vint
   - wd
   - xsv
   - yq
