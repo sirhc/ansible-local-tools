@@ -1,0 +1,6 @@
+---
+- import_tasks: install_gem.yml
+  vars:
+    module: mdl
+    env: mdl
+    cmd: mdl
