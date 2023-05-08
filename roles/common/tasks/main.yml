@@ -22,10 +22,3 @@
 - name: Gather Package Facts
   package_facts:
     manager: auto
-
-- name: Install Package Requirements
-  dnf:
-    name: python3-virtualenv
-    state: present
-  become: true
-  when: "not 'python3-virtualenv' in ansible_facts.packages"
