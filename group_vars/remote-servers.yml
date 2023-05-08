@@ -1,0 +1,28 @@
+---
+tools:
+  - aws-vault
+  - awscliv2
+  - b2
+  - epy
+  - fd
+  - gau
+  - granted
+  - greg
+  - grip
+  - htmltab
+  - hugo
+  - humblebundle-downloader
+  - hwatch
+  - jp
+  - kb
+  - mcfly
+  - mlr
+  - pup
+  - rich
+  - shfmt
+  - tflint
+  - todoist
+  - vint
+  - wd
+  - xsv
+  - yq
