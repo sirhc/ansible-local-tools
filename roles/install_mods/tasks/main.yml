@@ -1,0 +1,8 @@
+# https://github.com/charmbracelet/mods/releases/download/v0.1.1/mods_Linux_x86_64.tar.gz
+---
+- import_tasks: install_github_archive.yml
+  vars:
+    repo: charmbracelet/mods
+    file: mods_Linux_x86_64.tar.gz
+    copy:
+      - {src: "mods", dest: "{{ bin_dir }}/mods", mode: "0755"}
