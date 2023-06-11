@@ -29,7 +29,6 @@ tools:
   - mcfly
   - mdl
   - mlr
-  - mods
   - pup
   - rich
   - shfmt
