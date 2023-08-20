@@ -15,6 +15,11 @@
         release_ref: "{{ latest_release.stdout }}"
   when: release == 'latest'
 
+- name: Check Installed
+  stat:
+    path: "{{ opt_dir }}/awscli/v2/{{ release_ref }}"
+  register: installed
+
 - name: Install Package
   block:
     - name: Create Temporary Directory
@@ -47,6 +52,7 @@
         path: "{{ tempdir.path }}"
         state: absent
       changed_when: false
+  when: not installed.stat.exists
 
 - name: Remove Old Versions
   shell: |
