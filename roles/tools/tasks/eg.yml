@@ -1,0 +1,13 @@
+# https://github.com/srsudar/eg
+---
+- name: Installing eg
+  include_role:
+    name: install
+    tasks_from: pip
+  vars:
+    module:
+      - git+https://github.com/srsudar/eg
+    env: eg
+    cmd: eg
+  tags:
+    - eg
