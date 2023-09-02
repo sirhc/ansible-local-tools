@@ -1,6 +1,0 @@
----
-- import_tasks: install_github_files.yml
-  vars:
-    repo: jmespath/jp
-    copy:
-      - {src: "jp-linux-amd64", dest: "{{ bin_dir }}/jp", mode: "0755"}

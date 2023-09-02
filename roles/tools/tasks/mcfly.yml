@@ -1,0 +1,13 @@
+# https://github.com/cantino/mcfly
+---
+- name: Installing McFly
+  include_role:
+    name: github
+    tasks_from: gh_install_archive
+  vars:
+    repo: cantino/mcfly
+    file: mcfly-{{ gh_release_tag }}-x86_64-unknown-linux-musl.tar.gz
+    copy:
+      - src: "mcfly"
+        dest: "{{ bin_dir }}/mcfly"
+        mode: "0755"

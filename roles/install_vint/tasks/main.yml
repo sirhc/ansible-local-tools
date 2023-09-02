@@ -1,6 +1,0 @@
----
-- import_tasks: install_pip.yml
-  vars:
-    module: vim-vint
-    env: vim-vint
-    cmd: vint

@@ -1,6 +1,0 @@
----
-- import_tasks: install_github_files.yml
-  vars:
-    repo: Backblaze/B2_Command_Line_Tool
-    copy:
-      - {src: "b2-linux", dest: "{{ bin_dir }}/b2", mode: "0755"}

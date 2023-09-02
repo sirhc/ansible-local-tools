@@ -1,7 +1,0 @@
----
-- import_tasks: install_github_archive.yml
-  vars:
-    repo: gohugoio/hugo
-    file: hugo_{{ release_ref | replace('v', '') }}_Linux-64bit.tar.gz
-    copy:
-      - {src: "hugo", dest: "{{ bin_dir }}/hugo", mode: "0755"}

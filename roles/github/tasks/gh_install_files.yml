@@ -1,0 +1,14 @@
+---
+- name: Finding Latest Release
+  include_role:
+    name: github
+    tasks_from: gh_latest_release
+
+- name: Installing Files from GitHub
+  get_url:
+    url: "{{ gh_download_url }}/{{ cp.src }}"
+    dest: "{{ cp.dest }}"
+    mode: "{{ cp.mode }}"
+  loop: "{{ copy }}"
+  loop_control:
+    loop_var: cp

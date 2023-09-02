@@ -1,7 +1,0 @@
----
-- hosts: all
-  vars_files:
-    - github_token.yml
-  roles:
-    - common
-    - tools

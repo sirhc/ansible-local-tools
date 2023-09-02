@@ -1,7 +1,0 @@
----
-- import_tasks: install_github_archive.yml
-  vars:
-    repo: johnkerl/miller
-    file: miller-{{ release_ref | replace('v', '') }}-linux-amd64.tar.gz
-    copy:
-      - {src: "miller-{{ release_ref | replace('v', '') }}-linux-amd64/mlr", dest: "{{ bin_dir }}/mlr", mode: "0755"}

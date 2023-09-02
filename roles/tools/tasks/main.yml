@@ -1,6 +1,6 @@
 ---
-- name: Install Tools
-  include_tasks: install.yml
-  vars:
-    tool: "{{ item }}"
+- name: Installing Tools
+  ansible.builtin.include_tasks: "{{ tool }}.yml"
   loop: "{{ tools }}"
+  loop_control:
+    loop_var: tool

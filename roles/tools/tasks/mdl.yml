@@ -1,0 +1,10 @@
+# https://github.com/markdownlint/markdownlint
+---
+- name: Installing mdl - Markdown Lint Tool
+  include_role:
+    name: install
+    tasks_from: gem
+  vars:
+    name: mdl
+    repo: https://github.com/markdownlint/markdownlint
+    env: mdl

@@ -1,0 +1,17 @@
+# https://github.com/mfaerevaag/wd
+---
+- name: Installing wd - Warp Directory
+  get_url:
+    url: https://raw.githubusercontent.com/mfaerevaag/wd/master/{{ item.src }}
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode }}"
+  loop:
+    - src: "wd.sh"
+      dest: "{{ bin_dir }}/wd.sh"
+      mode: "0755"
+    - src: "wd.1"
+      dest: "{{ man_dir }}/man1/wd.1"
+      mode: "0644"
+    - src: "_wd.sh"
+      dest: "{{ data_dir }}/zsh/site-functions/_wd"
+      mode: "0644"

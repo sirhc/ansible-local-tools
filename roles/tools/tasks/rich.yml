@@ -1,0 +1,11 @@
+# https://github.com/Textualize/rich-cli
+---
+- name: Installing Rich-CLI
+  include_role:
+    name: install
+    tasks_from: pip
+  vars:
+    module:
+      - git+https://github.com/Textualize/rich-cli
+    env: rich-cli
+    cmd: rich

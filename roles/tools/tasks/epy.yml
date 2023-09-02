@@ -1,0 +1,11 @@
+# https://github.com/wustho/epy
+---
+- name: Installing epy - CLI Ebook Reader
+  include_role:
+    name: install
+    tasks_from: pip
+  vars:
+    module:
+      - git+https://github.com/wustho/epy
+    env: epy
+    cmd: epy

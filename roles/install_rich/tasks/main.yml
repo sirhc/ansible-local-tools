@@ -1,7 +1,0 @@
----
-- import_tasks: install_pip.yml
-  vars:
-    module:
-      - rich-cli
-    env: rich-cli
-    cmd: rich

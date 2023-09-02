@@ -1,0 +1,13 @@
+# https://github.com/ericchiang/pup
+---
+- name: Installing pup
+  include_role:
+    name: github
+    tasks_from: gh_install_archive
+  vars:
+    repo: ericchiang/pup
+    file: pup_{{ gh_release_tag }}_linux_amd64.zip
+    copy:
+      - src: "pup"
+        dest: "{{ bin_dir }}/pup"
+        mode: "0755"

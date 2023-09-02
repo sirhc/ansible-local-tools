@@ -1,6 +1,0 @@
----
-- import_tasks: install_github_files.yml
-  vars:
-    repo: mvdan/sh
-    copy:
-      - {src: "shfmt_{{ release_ref }}_linux_amd64", dest: "{{ bin_dir }}/shfmt", mode: "0755"}

@@ -1,0 +1,12 @@
+# https://github.com/jmespath/jp
+---
+- name: Installing jp - JMESPath
+  include_role:
+    name: github
+    tasks_from: gh_install_files
+  vars:
+    repo: jmespath/jp
+    copy:
+      - src: "jp-linux-amd64"
+        dest: "{{ bin_dir }}/jp"
+        mode: "0755"

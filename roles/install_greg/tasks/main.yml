@@ -1,8 +1,0 @@
----
-- import_tasks: install_pip.yml
-  vars:
-    module:
-      - eyeD3
-      - greg
-    env: greg
-    cmd: greg

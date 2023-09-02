@@ -1,6 +1,0 @@
----
-- import_tasks: install_pip.yml
-  vars:
-    module: humblebundle-downloader
-    env: humblebundle-downloader
-    cmd: hbd

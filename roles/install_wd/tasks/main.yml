@@ -1,9 +1,0 @@
----
-- import_tasks: install_github_clone.yml
-  vars:
-    repo: mfaerevaag/wd
-    dest: wd
-    link:
-      - {src: "wd.sh", dest: "{{ bin_dir }}/wd.sh"}
-      - {src: "wd.1", dest: "{{ man_dir }}/man1/wd.1"}
-      - {src: "_wd.sh", dest: "{{ data_dir }}/zsh/site-functions/_wd"}

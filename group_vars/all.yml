@@ -5,24 +5,14 @@ opt_dir: "{{ local_dir }}/opt"
 data_dir: "{{ local_dir }}/share"
 man_dir: "{{ data_dir }}/man"
 
-release: latest  # default, override in individual role calls
-
-github_metadata_url: "https://api.github.com/repos/{{ repo }}/releases/{{ release }}"
-github_download_url: "https://github.com/{{ repo }}/releases/download/{{ release_ref }}"
-
 tools:
-  - aws-vault
   - awscliv2
   - b2
   - epy
-  - fd
-  - gau
   - granted
-  - greg
-  - grip
   - htmltab
   - hugo
-  - humblebundle-downloader
+  - hbd
   - hwatch
   - jp
   - kb
@@ -36,5 +26,4 @@ tools:
   - todoist
   - vint
   - wd
-  - xsv
   - yq

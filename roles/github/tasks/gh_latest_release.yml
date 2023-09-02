@@ -1,0 +1,13 @@
+---
+- name: Fetching Latest Release
+  uri:
+    headers:
+      Accept: application/vnd.github.v3+json
+      Authorization: token {{ gh_token }}
+    url: "{{ gh_releases_url }}"
+    return_content: true
+  register: gh_content
+
+- name: Setting Release Tag
+  set_fact:
+    gh_release_tag: "{{ gh_content.json.tag_name }}"
