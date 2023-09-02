@@ -8,7 +8,3 @@ Various roles to install tools that aren't packaged by Fedora into
 ```
 > ansible-playbook tools.yml
 ```
-
-## To Do
-
-Find man pages for the commands being installed.
