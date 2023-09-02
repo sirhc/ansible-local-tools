@@ -10,3 +10,5 @@
       - src: b2-linux
         dest: "{{ bin_dir }}/b2"
         mode: "0755"
+  tags:
+    - b2

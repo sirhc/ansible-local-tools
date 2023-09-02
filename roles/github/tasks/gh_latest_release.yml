@@ -7,7 +7,11 @@
     url: "{{ gh_releases_url }}"
     return_content: true
   register: gh_content
+  tags:
+    - always
 
 - name: Setting Release Tag
   set_fact:
     gh_release_tag: "{{ gh_content.json.tag_name }}"
+  tags:
+    - always

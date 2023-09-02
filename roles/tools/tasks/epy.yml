@@ -9,3 +9,5 @@
       - git+https://github.com/wustho/epy
     env: epy
     cmd: epy
+  tags:
+    - epy

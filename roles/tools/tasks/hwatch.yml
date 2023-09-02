@@ -17,3 +17,5 @@
       - src: "completion/zsh/_hwatch"
         dest: "{{ data_dir }}/zsh/site-functions/_hwatch"
         mode: "0644"
+  tags:
+    - hwatch

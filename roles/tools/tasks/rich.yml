@@ -9,3 +9,5 @@
       - git+https://github.com/Textualize/rich-cli
     env: rich-cli
     cmd: rich
+  tags:
+    - rich

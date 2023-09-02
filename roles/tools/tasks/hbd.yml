@@ -9,3 +9,5 @@
       - git+https://github.com/xtream1101/humblebundle-downloader
     env: hbd
     cmd: hbd
+  tags:
+    hbd

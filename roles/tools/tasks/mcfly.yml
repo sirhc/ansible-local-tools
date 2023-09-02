@@ -11,3 +11,5 @@
       - src: "mcfly"
         dest: "{{ bin_dir }}/mcfly"
         mode: "0755"
+  tags:
+    - mcfly

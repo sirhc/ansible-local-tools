@@ -1,26 +1,29 @@
 # https://github.com/sachaos/todoist
 ---
-- name: Installing Todoist CLI
-  include_role:
-    name: github
-    tasks_from: gh_install_files
-  vars:
-    repo: sachaos/todoist
-    copy:
-      - src: "todoist_linux_amd64"
-        dest: "{{ bin_dir }}/todoist"
-        mode: "0755"
+- block:
+    - name: Installing Todoist CLI
+      include_role:
+        name: github
+        tasks_from: gh_install_files
+      vars:
+        repo: sachaos/todoist
+        copy:
+          - src: "todoist_linux_amd64"
+            dest: "{{ bin_dir }}/todoist"
+            mode: "0755"
 
-- name: Generating Completion Function
-  get_url:
-    url: https://raw.githubusercontent.com/urfave/cli/main/autocomplete/zsh_autocomplete
-    dest: "{{ data_dir }}/zsh/site-functions/_todoist"
-    mode: "0644"
-  changed_when: false
+    - name: Generating Completion Function
+      get_url:
+        url: https://raw.githubusercontent.com/urfave/cli/main/autocomplete/zsh_autocomplete
+        dest: "{{ data_dir }}/zsh/site-functions/_todoist"
+        mode: "0644"
+      changed_when: false
 
-- name: Replacing $PATH
-  replace:
-    path: "{{ data_dir }}/zsh/site-functions/_todoist"
-    regexp: '\$PROG'
-    replace: todoist
-  changed_when: false
+    - name: Replacing $PATH
+      replace:
+        path: "{{ data_dir }}/zsh/site-functions/_todoist"
+        regexp: '\$PROG'
+        replace: todoist
+      changed_when: false
+  tags:
+    - todoist

@@ -15,3 +15,5 @@
     - src: "_wd.sh"
       dest: "{{ data_dir }}/zsh/site-functions/_wd"
       mode: "0644"
+  tags:
+    - wd

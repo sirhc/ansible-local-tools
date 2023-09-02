@@ -1,25 +1,28 @@
 # https://www.granted.dev/
 ---
-- name: "granted : Finding Latest Release"
-  include_role:
-    name: github
-    tasks_from: gh_latest_release
-  vars:
-    repo: common-fate/granted
+- block:
+    - name: "granted : Finding Latest Release"
+      include_role:
+        name: github
+        tasks_from: gh_latest_release
+      vars:
+        repo: common-fate/granted
 
-- name: "granted : Installing Release"
-  include_role:
-    name: install
-    tasks_from: remote_archive
-  vars:
-    url: "https://releases.commonfate.io/granted/{{ gh_release_tag }}/granted_{{ gh_release_tag | replace('v', '') }}_linux_x86_64.tar.gz"
-    copy:
-      - src: "assume"
-        dest: "{{ bin_dir }}/assume"
-        mode: "0755"
-      - src: "assumego"
-        dest: "{{ bin_dir }}/assumego"
-        mode: "0755"
-      - src: "granted"
-        dest: "{{ bin_dir }}/granted"
-        mode: "0755"
+    - name: "granted : Installing Release"
+      include_role:
+        name: install
+        tasks_from: remote_archive
+      vars:
+        url: "https://releases.commonfate.io/granted/{{ gh_release_tag }}/granted_{{ gh_release_tag | replace('v', '') }}_linux_x86_64.tar.gz"
+        copy:
+          - src: "assume"
+            dest: "{{ bin_dir }}/assume"
+            mode: "0755"
+          - src: "assumego"
+            dest: "{{ bin_dir }}/assumego"
+            mode: "0755"
+          - src: "granted"
+            dest: "{{ bin_dir }}/granted"
+            mode: "0755"
+  tags:
+    - granted

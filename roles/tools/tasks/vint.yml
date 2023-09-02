@@ -9,3 +9,5 @@
       - git+https://github.com/Vimjas/vint
     env: vint
     cmd: vint
+  tags:
+    - vint

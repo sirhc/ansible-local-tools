@@ -1,11 +1,15 @@
 ---
-- name: Installing Module
-  pip:
-    name: "{{ module }}"
-    virtualenv: "{{ opt_dir }}/{{ env }}"
+- block:
+    - name: Installing Module
+      pip:
+        name: "{{ module }}"
+        extra_args: --upgrade
+        virtualenv: "{{ opt_dir }}/{{ env }}"
 
-- name: Creating Link
-  file:
-    src: "{{ opt_dir }}/{{ env }}/bin/{{ cmd }}"
-    dest: "{{ bin_dir }}/{{ cmd }}"
-    state: link
+    - name: Creating Link
+      file:
+        src: "{{ opt_dir }}/{{ env }}/bin/{{ cmd }}"
+        dest: "{{ bin_dir }}/{{ cmd }}"
+        state: link
+  tags:
+    - always

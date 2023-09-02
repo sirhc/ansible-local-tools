@@ -10,3 +10,5 @@
       - src: "shfmt_{{ gh_release_tag }}_linux_amd64"
         dest: "{{ bin_dir }}/shfmt"
         mode: "0755"
+  tags:
+    shfmt

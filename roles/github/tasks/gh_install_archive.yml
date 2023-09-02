@@ -3,6 +3,8 @@
   include_role:
     name: github
     tasks_from: gh_latest_release
+  tags:
+    - always
 
 - name: Installing Release from GitHub Archive
   include_role:
@@ -10,3 +12,5 @@
     tasks_from: remote_archive
   vars:
     url: "{{ gh_download_url }}/{{ file }}"
+  tags:
+    - always

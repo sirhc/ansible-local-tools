@@ -11,3 +11,5 @@
       - src: "tflint"
         dest: "{{ bin_dir }}/tflint"
         mode: "0755"
+  tags:
+    - tflint

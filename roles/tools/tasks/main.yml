@@ -4,3 +4,5 @@
   loop: "{{ tools }}"
   loop_control:
     loop_var: tool
+  tags:
+    - always

@@ -8,3 +8,5 @@
     name: mdl
     repo: https://github.com/markdownlint/markdownlint
     env: mdl
+  tags:
+    - mdl

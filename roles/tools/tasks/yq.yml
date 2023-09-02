@@ -10,3 +10,5 @@
       - src: "yq_linux_amd64"
         dest: "{{ bin_dir }}/yq"
         mode: "0755"
+  tags:
+    - yq

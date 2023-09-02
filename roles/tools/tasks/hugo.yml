@@ -11,3 +11,5 @@
       - src: "hugo"
         dest: "{{ bin_dir }}/hugo"
         mode: "0755"
+  tags:
+    - hugo

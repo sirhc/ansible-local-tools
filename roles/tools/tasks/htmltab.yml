@@ -9,3 +9,5 @@
       - git+https://github.com/flother/htmltab
     env: htmltab
     cmd: htmltab
+  tags:
+    - htmltab

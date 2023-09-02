@@ -6,3 +6,5 @@
     repository: "{{ repo }}"
     state: latest
     user_install: true
+  tags:
+    - always

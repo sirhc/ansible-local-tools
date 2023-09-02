@@ -3,6 +3,8 @@
   include_role:
     name: github
     tasks_from: gh_latest_release
+  tags:
+    - always
 
 - name: Installing Files from GitHub
   get_url:
@@ -12,3 +14,5 @@
   loop: "{{ copy }}"
   loop_control:
     loop_var: cp
+  tags:
+    - always
