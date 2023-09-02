@@ -6,5 +6,9 @@ Various roles to install tools that aren't packaged by Fedora into
 ## Usage
 
 ```
-> ansible-playbook site.yml
+> ansible-playbook tools.yml
 ```
+
+## To Do
+
+Find man pages for the commands being installed.
