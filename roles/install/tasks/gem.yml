@@ -2,8 +2,7 @@
 - name: Installing Module
   community.general.gem:
     bindir: "{{ bin_dir }}"
-    install_dir: "{{ opt_dir }}/{{ env }}"
     name: "{{ name }}"
     repository: "{{ repo }}"
     state: latest
-    user_install: false
+    user_install: true
