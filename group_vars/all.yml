@@ -19,6 +19,7 @@ tools:
   - kb
   - mcfly
   - mdl
+  - mkcert
   - mlr
   - pup
   - rich
