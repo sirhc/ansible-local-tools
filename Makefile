@@ -1,5 +1,6 @@
-GITHUB_TOKEN = $(file < .github_token)
+SHELL        = zsh
 PLAYBOOK     = tools.yml
+GITHUB_TOKEN = $(file < .github_token)
 
 export GITHUB_TOKEN
 
@@ -11,3 +12,7 @@ verbose:
 
 debug:
 	ansible-playbook -vv $(PLAYBOOK)
+
+# Allow running tags with just `make $tool`.
+%:
+	ansible-playbook --tags $@ $(PLAYBOOK)
