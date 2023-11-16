@@ -8,7 +8,6 @@ man_dir: "{{ data_dir }}/man"
 tools:
   - awscliv2
   - b2
-  - eg
   - epy
   - granted
   - hbd
