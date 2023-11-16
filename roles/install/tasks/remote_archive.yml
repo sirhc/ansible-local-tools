@@ -26,7 +26,7 @@
 
     - name: Running Commands
       command:
-        argv: command
+        argv: "{{ command }}"
       args:
         chdir: "{{ tempdir.path }}"
       loop: "{{ commands }}"
