@@ -1,5 +1,5 @@
 ---
-- name: Create Directories
+- name: Creating Directories
   file:
     path: "{{ item }}"
     state: directory
@@ -15,7 +15,7 @@
   tags:
     - always
 
-- name: Disable Restic Backups
+- name: Disabling Restic Backups
   copy:
     content: ""
     dest: "{{ local_dir }}/.nobackup"
@@ -23,7 +23,7 @@
   tags:
     - always
 
-- name: Gather Package Facts
+- name: Gathering Package Facts
   package_facts:
     manager: auto
   tags:
