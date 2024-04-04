@@ -1,0 +1,16 @@
+# https://github.com/kellyjonbrazil/jtbl
+---
+- block:
+    - name: Installing JTBL
+      include_role:
+        name: github
+        tasks_from: gh_install_archive
+      vars:
+        repo: kellyjonbrazil/jtbl
+        file: jtbl-{{ gh_release_tag | replace('v', '') }}-linux-x86_64.tar.gz
+        copy:
+          - src: "jtbl"
+            dest: "{{ bin_dir }}/jtbl"
+            mode: "0755"
+  tags:
+    - jtbl
