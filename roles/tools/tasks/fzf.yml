@@ -1,0 +1,16 @@
+# https://github.com/junegunn/fzf
+---
+- block:
+    - name: Installing fzf
+      include_role:
+        name: github
+        tasks_from: gh_install_archive
+      vars:
+        repo: junegunn/fzf
+        file: fzf-{{ gh_release_tag | replace('v', '') }}-linux_amd64.tar.gz
+        copy:
+          - src: "fzf"
+            dest: "{{ bin_dir }}/fzf"
+            mode: "0755"
+  tags:
+    - fzf

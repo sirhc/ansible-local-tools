@@ -9,6 +9,7 @@ tools:
   - awscliv2
   - b2
   - epy
+  - fzf
   - granted
   - hbd
   - htmltab
