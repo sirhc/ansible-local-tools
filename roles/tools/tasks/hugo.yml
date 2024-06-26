@@ -6,7 +6,7 @@
     tasks_from: gh_install_archive
   vars:
     repo: gohugoio/hugo
-    file: hugo_{{ gh_release_tag | replace('v', '') }}_Linux-64bit.tar.gz
+    file: hugo_extended_{{ gh_release_tag | replace('v', '') }}_Linux-64bit.tar.gz
     copy:
       - src: "hugo"
         dest: "{{ bin_dir }}/hugo"
