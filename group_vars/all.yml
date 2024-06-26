@@ -16,9 +16,7 @@ tools:
   - hugo
   - hwatch
   - jp
-  - jq
   - jtbl
-  - kb
   - mcfly
   - mdl
   - mkcert
