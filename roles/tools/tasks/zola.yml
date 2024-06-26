@@ -1,0 +1,16 @@
+# https://github.com/getzola/zola
+---
+- block:
+    - name: Installing Zola
+      include_role:
+        name: github
+        tasks_from: gh_install_archive
+      vars:
+        repo: getzola/zola
+        file: zola-{{ gh_release_tag }}-x86_64-unknown-linux-gnu.tar.gz
+        copy:
+          - src: "zola"
+            dest: "{{ bin_dir }}/zola"
+            mode: "0755"
+  tags:
+    - zola

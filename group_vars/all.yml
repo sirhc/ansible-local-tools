@@ -29,3 +29,4 @@ tools:
   - vint
   - wd
   - yq
+  - zola
