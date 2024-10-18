@@ -9,6 +9,7 @@ tools:
   - awscliv2
   - b2
   - epy
+  - eza
   - fzf
   - granted
   - hbd
