@@ -1,0 +1,17 @@
+# https://github.com/common-fate/granted
+---
+- name: Installing Granted
+  install_from_github:
+    repo: common-fate/granted
+    asset_regex: granted_.*.tar.gz
+    version_command: granted --version
+    move_rules:
+      - src_regex: assume
+        dst: "{{ bin_dir }}/assume"
+        mode: 0755
+      - src_regex: assumego
+        dst: "{{ bin_dir }}/assumego"
+        mode: 0755
+      - src_regex: granted
+        dst: "{{ bin_dir }}/granted"
+        mode: 0755

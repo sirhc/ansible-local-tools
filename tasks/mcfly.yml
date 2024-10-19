@@ -1,0 +1,11 @@
+# https://github.com/cantino/mcfly
+---
+- name: Installing McFly
+  install_from_github:
+    repo: cantino/mcfly
+    asset_regex: mcfly-.*.tar.gz
+    version_command: mcfly --version
+    move_rules:
+      - src_regex: mcfly
+        dst: "{{ bin_dir }}/mcfly"
+        mode: 0755

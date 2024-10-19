@@ -1,0 +1,21 @@
+# https://github.com/sachaos/todoist
+---
+- name: Installing Todoist CLI
+  install_from_github:
+    repo: sachaos/todoist
+    asset_regex: todoist_.*
+    version_command: todoist --version
+    move_rules:
+      - src_regex: todoist_.*
+        dst: "{{ bin_dir }}/todoist"
+        mode: 0755
+
+- ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/urfave/cli/main/autocomplete/zsh_autocomplete
+    dest: "{{ data_dir }}/zsh/site-functions/_todoist"
+    mode: 0644
+
+- ansible.builtin.replace:
+    path: "{{ data_dir }}/zsh/site-functions/_todoist"
+    regexp: '\$PROG'
+    replace: todoist

@@ -1,0 +1,16 @@
+# https://github.com/johnkerl/miller
+---
+- name: Installing Miller
+  install_from_github:
+    repo: johnkerl/miller
+    asset_regex: miller-.*.tar.gz
+    version_command: mlr --version
+    move_rules:
+      - src_regex: mlr
+        dst: "{{ bin_dir }}/mlr"
+        mode: 0755
+
+- ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/johnkerl/miller/main/man/mlr.1
+    dest: "{{ man_dir }}/man1/mlr.1"
+    mode: 0644

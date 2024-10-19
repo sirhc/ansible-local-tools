@@ -1,0 +1,11 @@
+# https://github.com/kellyjonbrazil/jtbl
+---
+- name: Installing JTBL
+  install_from_github:
+    repo: kellyjonbrazil/jtbl
+    asset_regex: jtbl-.*.tar.gz
+    version_command: sh -c 'jtbl --version 2>&1'
+    move_rules:
+      - src_regex: jtbl
+        dst: "{{ bin_dir }}/jtbl"
+        mode: 0755

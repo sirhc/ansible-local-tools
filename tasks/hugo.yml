@@ -1,0 +1,11 @@
+# https://github.com/gohugoio/hugo
+---
+- name: Installing Hugo
+  install_from_github:
+    repo: gohugoio/hugo
+    asset_regex: hugo_.*.tar.gz
+    version_command: hugo version
+    move_rules:
+      - src_regex: hugo
+        dst: "{{ bin_dir }}/hugo"
+        mode: 0755

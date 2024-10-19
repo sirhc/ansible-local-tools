@@ -1,0 +1,11 @@
+# https://github.com/mvdan/sh
+---
+- name: Installing shfmt
+  install_from_github:
+    repo: mvdan/sh
+    asset_regex: shfmt_.*
+    version_command: shfmt --version
+    move_rules:
+      - src_regex: shfmt_.*
+        dst: "{{ bin_dir }}/shfmt"
+        mode: 0755

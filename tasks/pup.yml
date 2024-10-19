@@ -1,0 +1,11 @@
+# https://github.com/ericchiang/pup
+---
+- name: Installing pup
+  install_from_github:
+    repo: ericchiang/pup
+    asset_regex: pup_.*.tar.gz
+    version_command: pup --version
+    move_rules:
+      - src_regex: pup
+        dst: "{{ bin_dir }}/pup"
+        mode: 0755

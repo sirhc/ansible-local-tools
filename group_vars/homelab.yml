@@ -1,0 +1,8 @@
+---
+tools:
+  - eza
+  - fzf
+  - hbd
+  - hwatch
+  - mcfly
+  - yq

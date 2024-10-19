@@ -1,0 +1,11 @@
+# https://github.com/getzola/zola
+---
+- name: Installing Zola
+  install_from_github:
+    repo: getzola/zola
+    asset_regex: zola-.*.tar.gz
+    version_command: zola --version
+    move_rules:
+      - src_regex: zola
+        dst: "{{ bin_dir }}/zola"
+        mode: 0755

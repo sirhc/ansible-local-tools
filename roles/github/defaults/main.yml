@@ -1,5 +1,0 @@
----
-gh_releases_url: "https://api.github.com/repos/{{ repo }}/releases/latest"
-gh_download_url: "https://github.com/{{ repo }}/releases/download/{{ gh_release_tag }}"
-
-gh_token: "{{ lookup('ansible.builtin.env', 'GITHUB_TOKEN') }}"

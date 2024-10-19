@@ -1,0 +1,12 @@
+# https://github.com/Textualize/rich-cli
+---
+- name: Installing Rich-CLI
+  ansible.builtin.pip:
+    name: git+https://github.com/Textualize/rich-cli
+    extra_args: --upgrade
+    virtualenv: "{{ opt_dir }}/rich-cli"
+
+- ansible.builtin.file:
+    src: "{{ opt_dir }}/rich-cli/bin/rich"
+    dest: "{{ bin_dir }}/rich"
+    state: link

@@ -1,0 +1,11 @@
+# https://github.com/mikefarah/yq
+---
+- name: Installing yq
+  install_from_github:
+    repo: mikefarah/yq
+    asset_regex: yq_.*.tar.gz
+    version_command: yq --version
+    move_rules:
+      - src_regex: yq_.*
+        dst: "{{ bin_dir }}/yq"
+        mode: 0755

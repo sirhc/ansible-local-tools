@@ -1,0 +1,17 @@
+# https://github.com/blacknon/hwatch
+---
+- name: Installing hwatch
+  install_from_github:
+    repo: blacknon/hwatch
+    asset_regex: hwatch-.*-unknown-linux-gnu.tar.gz
+    version_command: hwatch --version
+    move_rules:
+      - src_regex: hwatch
+        dst: "{{ bin_dir }}/hwatch"
+        mode: 0755
+      - src_regex: man/hwatch.1
+        dst: "{{ man_dir }}/man1/hwatch.1"
+        mode: 0644
+      - src_regex: completion/zsh/_hwatch
+        dst: "{{ data_dir }}/zsh/site-functions/_hwatch"
+        mode: 0644

@@ -1,0 +1,12 @@
+# https://github.com/wustho/epy
+---
+- name: Installing epy
+  ansible.builtin.pip:
+    name: git+https://github.com/wustho/epy
+    extra_args: --upgrade
+    virtualenv: "{{ opt_dir }}/epy"
+
+- ansible.builtin.file:
+    src: "{{ opt_dir }}/epy/bin/epy"
+    dest: "{{ bin_dir }}/epy"
+    state: link

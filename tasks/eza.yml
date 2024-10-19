@@ -1,0 +1,11 @@
+# https://github.com/eza-community/eza
+---
+- name: Installing eza
+  install_from_github:
+    repo: eza-community/eza
+    asset_regex: eza_.*-unknown-linux-gnu.tar.gz
+    version_command: eza --version
+    move_rules:
+      - src_regex: eza
+        dst: "{{ bin_dir }}/eza"
+        mode: 0755

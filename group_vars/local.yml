@@ -1,0 +1,27 @@
+---
+tools:
+  - awscliv2
+  - b2
+  - epy
+  - eza
+  - fzf
+  - granted
+  - hbd
+  - htmltab
+  - hugo
+  - hwatch
+  - jp
+  - jtbl
+  - mcfly
+  - mdl
+  - mkcert
+  - mlr
+  - pup
+  - rich
+  - shfmt
+  - tflint
+  - todoist
+  - vint
+  - wd
+  - yq
+  - zola

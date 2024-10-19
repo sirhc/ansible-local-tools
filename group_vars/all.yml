@@ -4,30 +4,3 @@ bin_dir: "{{ local_dir }}/bin"
 opt_dir: "{{ local_dir }}/opt"
 data_dir: "{{ local_dir }}/share"
 man_dir: "{{ data_dir }}/man"
-
-tools:
-  - awscliv2
-  - b2
-  - epy
-  - eza
-  - fzf
-  - granted
-  - hbd
-  - htmltab
-  - hugo
-  - hwatch
-  - jp
-  - jtbl
-  - mcfly
-  - mdl
-  - mkcert
-  - mlr
-  - pup
-  - rich
-  - shfmt
-  - tflint
-  - todoist
-  - vint
-  - wd
-  - yq
-  - zola

@@ -1,0 +1,11 @@
+# https://github.com/jmespath/jp
+---
+- name: Installing jp - JMESPath
+  install_from_github:
+    repo: jmespath/jp
+    asset_regex: jp-.*
+    version_command: jp --version
+    move_rules:
+      - src_regex: jp-.*
+        dst: "{{ bin_dir }}/jp"
+        mode: 0755

@@ -12,19 +12,13 @@
     - "{{ data_dir }}/zsh/site-functions"
     - "{{ man_dir }}"
     - "{{ man_dir }}/man1"
-  tags:
-    - always
 
 - name: Disabling Restic Backups
   copy:
     content: ""
     dest: "{{ local_dir }}/.nobackup"
     force: false
-  tags:
-    - always
 
 - name: Gathering Package Facts
   package_facts:
     manager: auto
-  tags:
-    - always

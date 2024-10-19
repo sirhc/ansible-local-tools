@@ -1,0 +1,11 @@
+# https://github.com/FiloSottile/mkcert
+---
+- name: Installing mkcert
+  install_from_github:
+    repo: FiloSottile/mkcert
+    asset_regex: mkcert-.*
+    version_command: mkcert --version
+    move_rules:
+      - src_regex: mkcert-.*
+        dst: "{{ bin_dir }}/mkcert"
+        mode: 0755

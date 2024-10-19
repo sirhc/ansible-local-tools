@@ -1,0 +1,11 @@
+# https://www.backblaze.com/docs/cloud-storage-command-line-tools
+---
+- name: Installing Backblaze B2 CLI
+  install_from_github:
+    repo: Backblaze/B2_Command_Line_Tool
+    asset_regex: b2-linux
+    version_command: b2 version
+    move_rules:
+      - src_regex: b2-linux
+        dst: "{{ bin_dir }}/b2"
+        mode: 0755

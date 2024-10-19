@@ -1,0 +1,12 @@
+# https://github.com/Vimjas/vint
+---
+- name: Installing vint
+  ansible.builtin.pip:
+    name: git+https://github.com/Vimjas/vint
+    extra_args: --upgrade
+    virtualenv: "{{ opt_dir }}/vint"
+
+- ansible.builtin.file:
+    src: "{{ opt_dir }}/vint/bin/vint"
+    dest: "{{ bin_dir }}/vint"
+    state: link
