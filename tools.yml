@@ -1,0 +1,30 @@
+---
+- hosts: all
+  gather_facts: true
+
+  tasks:
+    - name: Creating Local Directories
+      file:
+        path: "{{ item }}"
+        mode: "0755"
+        state: directory
+      loop:
+        - "{{ local_dir }}"
+        - "{{ bin_dir }}"
+        - "{{ opt_dir }}"
+        - "{{ data_dir }}"
+        - "{{ data_dir }}/zsh/site-functions"
+        - "{{ man_dir }}"
+        - "{{ man_dir }}/man1"
+
+    - name: Disabling Restic Backups
+      copy:
+        dest: "{{ local_dir }}/.nobackup"
+        content: ""
+        force: false
+
+    - name: Installing Tools
+      ansible.builtin.include_tasks: "tasks/{{ tool }}.yml"
+      loop: "{{ tools }}"
+      loop_control:
+        loop_var: tool
