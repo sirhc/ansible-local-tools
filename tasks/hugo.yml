@@ -3,7 +3,7 @@
 - name: Installing Hugo
   install_from_github:
     repo: gohugoio/hugo
-    asset_regex: hugo_.*.tar.gz
+    asset_regex: hugo_\d.*.tar.gz
     version_command: hugo version
     move_rules:
       - src_regex: hugo
