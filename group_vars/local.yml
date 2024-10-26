@@ -2,6 +2,7 @@
 tools:
   - awscliv2
   - b2
+  - carapace
   - epy
   - eza
   - fzf

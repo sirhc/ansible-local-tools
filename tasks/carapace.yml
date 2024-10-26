@@ -1,0 +1,11 @@
+# https://github.com/carapace-sh/carapace-bin
+---
+- name: Installing carapace
+  install_from_github:
+    repo: carapace-sh/carapace-bin
+    asset_regex: carapace-bin_.*\.tar\.gz
+    version_command: cara --version
+    move_rules:
+      - src_regex: carapace
+        dst: "{{ bin_dir }}/carapace"
+        mode: "0755"
