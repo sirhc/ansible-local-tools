@@ -14,6 +14,7 @@
         - "{{ opt_dir }}"
         - "{{ data_dir }}"
         - "{{ data_dir }}/zsh/site-functions"
+        - "{{ data_dir }}/vim/vimfiles/plugin"
         - "{{ man_dir }}"
         - "{{ man_dir }}/man1"
 
