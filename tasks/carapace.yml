@@ -9,3 +9,13 @@
       - src_regex: carapace
         dst: "{{ bin_dir }}/carapace"
         mode: "0755"
+
+- name: Installing carapace-spec
+  install_from_github:
+    repo: carapace-sh/carapace-spec
+    asset_regex: carapace-spec.*\.tar\.gz
+    version_command: echo 0.0.0  # carapace-spec doesn't have a version command
+    move_rules:
+      - src_regex: carapace-spec
+        dst: "{{ bin_dir }}/carapace-spec"
+        mode: "0755"
