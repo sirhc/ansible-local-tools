@@ -6,7 +6,8 @@
     extra_args: --upgrade
     virtualenv: "{{ opt_dir }}/vint"
 
-- ansible.builtin.file:
+- name: Linking vint
+  ansible.builtin.file:
     src: "{{ opt_dir }}/vint/bin/vint"
     dest: "{{ bin_dir }}/vint"
     state: link

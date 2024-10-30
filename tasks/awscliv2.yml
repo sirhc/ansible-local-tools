@@ -2,49 +2,54 @@
 ---
 # ❯ aws --version
 # aws-cli/2.18.9 Python/3.12.6 Linux/6.11.3-200.fc40.x86_64 exe/x86_64.fedora.40
-- ansible.builtin.shell: aws --version | cut -d ' ' -f 1 | cut -d '/' -f 2
+- name: Reading Current aws Version
+  ansible.builtin.shell: aws --version | cut -d ' ' -f 1 | cut -d '/' -f 2
   register: aws_version
   changed_when: false
   failed_when: false
 
-- ansible.builtin.uri:
+- name: Fetching Latest aws Version
+  ansible.builtin.uri:
     url: https://api.github.com/repos/aws/aws-cli/git/refs/tags
     headers:
       Accept: application/vnd.github+json
       X-GitHub-Api-Version: 2022-11-28
   register: aws_tags
 
-- ansible.builtin.set_fact:
+- name: Setting Latest aws Version
+  ansible.builtin.set_fact:
     aws_latest: "{{ aws_tags.json | community.general.json_query('[].ref') | map('ansible.builtin.regex_replace', '^refs/tags/', '') | community.general.version_sort | last }}"
 
 - when: aws_version.stdout != aws_latest
   block:
-    - ansible.builtin.tempfile:
+    - name: Creating Temporary Directory for aws
+      ansible.builtin.tempfile:
         state: directory
       register: tempdir
       changed_when: false
 
-    - name: Downloading AWS CLI v2
+    - name: Downloading aws
       ansible.builtin.unarchive:
         src: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
         dest: "{{ tempdir.path }}"
         remote_src: true
       changed_when: false
 
-    - name: Installing AWS CLI v2
+    - name: Installing aws
       ansible.builtin.shell: |
         ./aws/install --install-dir "{{ opt_dir }}/awscli" --bin-dir "{{ bin_dir }}" --update
       args:
         chdir: "{{ tempdir.path }}"
 
-    - name: Removing Old Versions of AWS CLI v2
+    - name: Removing Old Versions of aws
       ansible.builtin.shell: |
         find '{{ opt_dir }}/awscli/v2' -mindepth 1 -maxdepth 1 -type d \! -name "$(basename "$(readlink -f {{ opt_dir }}/awscli/v2/current)")" -print -exec rm -rf '{}' +
       register: find
       changed_when: find.stdout != ""
       failed_when: find.rc != 0
   always:
-    - ansible.builtin.file:
+    - name: Removing Temporary Directory for aws
+      ansible.builtin.file:
         path: "{{ tempdir.path }}"
         state: absent
       changed_when: false

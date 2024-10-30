@@ -1,6 +1,6 @@
 # https://github.com/cantino/mcfly
 ---
-- name: Installing McFly
+- name: Installing mcfly
   install_from_github:
     repo: cantino/mcfly
     asset_regex: mcfly-.*.tar.gz

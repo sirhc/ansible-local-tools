@@ -1,6 +1,6 @@
 # https://github.com/terraform-linters/tflint
 ---
-- name: Installing TFLint
+- name: Installing tflint
   install_from_github:
     repo: terraform-linters/tflint
     asset_regex: tflint_.*.zip

@@ -1,6 +1,6 @@
 # https://github.com/jmespath/jp
 ---
-- name: Installing jp - JMESPath
+- name: Installing jp
   install_from_github:
     repo: jmespath/jp
     asset_regex: jp-.*

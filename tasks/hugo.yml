@@ -1,6 +1,6 @@
 # https://github.com/gohugoio/hugo
 ---
-- name: Installing Hugo
+- name: Installing hugo
   install_from_github:
     repo: gohugoio/hugo
     asset_regex: hugo_\d.*.tar.gz

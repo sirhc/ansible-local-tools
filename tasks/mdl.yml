@@ -1,6 +1,6 @@
 # https://github.com/markdownlint/markdownlint
 ---
-- name: Installing mdl - Markdown Lint Tool
+- name: Installing mdl
   community.general.gem:
     bindir: "{{ bin_dir }}"
     name: mdl

@@ -1,6 +1,6 @@
 # https://github.com/getzola/zola
 ---
-- name: Installing Zola
+- name: Installing zola
   install_from_github:
     repo: getzola/zola
     asset_regex: zola-.*.tar.gz

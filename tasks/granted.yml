@@ -1,6 +1,6 @@
 # https://github.com/common-fate/granted
 ---
-- name: Installing Granted
+- name: Installing granted
   install_from_github:
     repo: common-fate/granted
     asset_regex: granted_.*.tar.gz

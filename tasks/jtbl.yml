@@ -1,6 +1,6 @@
 # https://github.com/kellyjonbrazil/jtbl
 ---
-- name: Installing JTBL
+- name: Installing jtbl
   install_from_github:
     repo: kellyjonbrazil/jtbl
     asset_regex: jtbl-.*.tar.gz

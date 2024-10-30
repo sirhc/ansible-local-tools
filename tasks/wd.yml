@@ -1,6 +1,6 @@
 # https://github.com/mfaerevaag/wd
 ---
-- name: Installing wd - Warp Directory
+- name: Installing wd
   ansible.builtin.get_url:
     url: "https://raw.githubusercontent.com/mfaerevaag/wd/master/{{ item.src }}"
     dest: "{{ item.dest }}"

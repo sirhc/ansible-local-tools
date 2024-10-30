@@ -1,12 +1,13 @@
 # https://github.com/flother/htmltab
 ---
-- name: Installing HTMLTab
+- name: Installing htmltab
   ansible.builtin.pip:
     name: git+https://github.com/flother/htmltab
     extra_args: --upgrade
     virtualenv: "{{ opt_dir }}/htmltab"
 
-- ansible.builtin.file:
+- name: Linking htmltab
+  ansible.builtin.file:
     src: "{{ opt_dir }}/htmltab/bin/htmltab"
     dest: "{{ bin_dir }}/htmltab"
     state: link

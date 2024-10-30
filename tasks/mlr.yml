@@ -1,6 +1,6 @@
 # https://github.com/johnkerl/miller
 ---
-- name: Installing Miller
+- name: Installing mlr
   install_from_github:
     repo: johnkerl/miller
     asset_regex: miller-.*.tar.gz
@@ -10,7 +10,8 @@
         dst: "{{ bin_dir }}/mlr"
         mode: 0755
 
-- ansible.builtin.get_url:
+- name: Installing mlr Man Page
+  ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/johnkerl/miller/main/man/mlr.1
     dest: "{{ man_dir }}/man1/mlr.1"
     mode: 0644

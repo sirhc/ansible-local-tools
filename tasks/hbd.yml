@@ -1,12 +1,13 @@
 # https://github.com/xtream1101/humblebundle-downloader
 ---
-- name: Installing Humble Bundle Downloader
+- name: Installing hbd
   ansible.builtin.pip:
     name: git+https://github.com/xtream1101/humblebundle-downloader
     extra_args: --upgrade
     virtualenv: "{{ opt_dir }}/hbd"
 
-- ansible.builtin.file:
+- name: Linking hbd
+  ansible.builtin.file:
     src: "{{ opt_dir }}/hbd/bin/hbd"
     dest: "{{ bin_dir }}/hbd"
     state: link

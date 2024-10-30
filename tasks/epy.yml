@@ -6,7 +6,8 @@
     extra_args: --upgrade
     virtualenv: "{{ opt_dir }}/epy"
 
-- ansible.builtin.file:
+- name: Linking epy
+  ansible.builtin.file:
     src: "{{ opt_dir }}/epy/bin/epy"
     dest: "{{ bin_dir }}/epy"
     state: link
