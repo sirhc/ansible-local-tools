@@ -9,3 +9,15 @@
       - src_regex: fzf
         dst: "{{ bin_dir }}/fzf"
         mode: 0755
+
+- name: Installing fzf Man Page
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/junegunn/fzf/refs/heads/master/man/man1/fzf.1
+    dest: "{{ man_dir }}/man1/fzf.1"
+    mode: "0644"
+
+- name: Installing fzf Vim Plugin
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/junegunn/fzf/refs/heads/master/plugin/fzf.vim
+    dest: "{{ data_dir }}/vim/vimfiles/plugin/fzf.vim"
+    mode: "0644"
